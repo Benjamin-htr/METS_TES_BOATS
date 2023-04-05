@@ -1,0 +1,4 @@
+// pnpm-monorepo/tsconfig.json
+{
+  "extends": "./tsconfig.base.json"
+}
