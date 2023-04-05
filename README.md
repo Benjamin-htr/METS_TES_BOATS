@@ -10,9 +10,11 @@ METS TES BOATS est un projet de développement de simulation maritime. Il s'agit
 
 ## Structure du projet
 
-Ce projet utilise une architecture microservices. Il est composé de deux services :
+Ce projet utilise une architecture microservices. Ici, cette architecture a été implémentée avec un monorepo via [pnpm](https://pnpm.io/) grâce aux [worskpaces](https://pnpm.io/workspaces).
 
 ## Installation
+
+Plusieurs étapes sont nécessaires pour installer le projet :
 
 ### Prérequis
 
