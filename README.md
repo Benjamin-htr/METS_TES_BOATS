@@ -18,8 +18,10 @@ Plusieurs étapes sont nécessaires pour installer le projet :
 
 ### Prérequis
 
-- [NodeJS](https://nodejs.org/en/)
-- [pnpm](https://pnpm.io/installation)
+Pour installer le projet, il faut, au préalable, installer les outils suivants :
+
+- [NodeJS](https://nodejs.org/en/) : je conseille de l'installer via [nvm](https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/) qui permet de gérer plusieurs versions de nodeJS sur la même machine (pratique pour jongler entre les projets).
+- [pnpm](https://pnpm.io/installation) : il s'agit d'un gestionnaire de dépendances qui permet de gérer les dépendances de manière plus efficace que npm ou yarn. Il est aussi utlisé pour gérer les monorepos via les [worskpaces](https://pnpm.io/workspaces).
 - [Git](https://git-scm.com/downloads)
 
 ### Importation du projet
