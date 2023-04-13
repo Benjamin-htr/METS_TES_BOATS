@@ -5,27 +5,26 @@ import { History } from "./pages/History/History";
 import { Home } from "./pages/Home/Home";
 import { NewTraject } from "./pages/NewTraject/NewTraject";
 
-const router = createBrowserRouter ([
-    {
-      path: "/",
-      element: <Home/>,
-    },
-    {
-      path: "/new_traject",
-      element: <NewTraject/>,
-    },
-    {
-      path : "/history",
-      element: <History/>,
-    }
-  ]);
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/new_traject",
+    element: <NewTraject />,
+  },
+  {
+    path: "/history",
+    element: <History />,
+  },
+]);
 
 function App() {
   sayHi("test");
-
   return (
     <div className="App">
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </div>
   );
 }

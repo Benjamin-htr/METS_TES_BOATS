@@ -1,6 +1,7 @@
 export const NewTraject = () => {
-  return (
-    <div>
+    return (
+          <div>
+            
       <h1>New Traject</h1>
     </div>
   );

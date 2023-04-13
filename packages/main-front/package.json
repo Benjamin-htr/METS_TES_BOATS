@@ -9,6 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@macaron-css/core": "^1.2.0",
+    "@macaron-css/react": "^1.2.1",
+    "@macaron-css/vite": "^1.1.3",
     "@pnpm-monorepo/shared": "workspace:^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
