@@ -1,0 +1,8 @@
+extends:
+  - ../../.eslintrc.yaml
+
+ignorePatterns:
+  - "!**/*"
+
+parserOptions:
+  project: true

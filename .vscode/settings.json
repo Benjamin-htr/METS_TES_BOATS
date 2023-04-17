@@ -4,12 +4,5 @@
   // An array of language ids which should be validated by ESLint
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
   // typescript auto-format settings
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "eslint.options": {
-    "overrideConfig": {
-      "parserOptions": {
-        "project": ["tsconfig.eslint.json"]
-      }
-    }
-  }
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

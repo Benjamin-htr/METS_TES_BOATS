@@ -1,0 +1,9 @@
+extends:
+  - ../../.eslintrc.yaml
+
+ignorePatterns:
+  - "!**/*"
+
+parserOptions:
+  project:
+    - packages/main-api/tsconfig.json

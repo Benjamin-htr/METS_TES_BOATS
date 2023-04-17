@@ -1,5 +1,3 @@
-root: true
-
 parser: "@typescript-eslint/parser"
 
 extends:
@@ -10,7 +8,6 @@ extends:
 
 parserOptions:
   project:
-    - ./tsconfig.eslint.json
     - ./packages/*/tsconfig.json
 
 plugins:
