@@ -1,0 +1,8 @@
+@font-face {
+  font-family: "Overwave"; /*Can be any text*/
+  src: local("Overwave"), url("./assets/Overwave.ttf") format("truetype");
+}
+
+.App {
+  height: 100%;
+}
