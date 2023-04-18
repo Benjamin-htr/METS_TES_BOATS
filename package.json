@@ -16,13 +16,5 @@
     "eslint": "^8.38.0",
     "prettier": "^2.8.7",
     "typescript": "^5.0.3"
-  },
-  "dependencies": {
-    "@tanstack/react-query": "^4.28.0",
-    "@trpc/client": "^10.18.0",
-    "@trpc/next": "^10.18.0",
-    "@trpc/react-query": "^10.18.0",
-    "@trpc/server": "^10.18.0",
-    "zod": "^3.21.4"
   }
 }
