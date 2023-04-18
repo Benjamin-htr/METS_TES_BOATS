@@ -1,14 +1,20 @@
 {
   "compilerOptions": {
-    "strict": true,
-    "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "declaration": true,
+    "declarationMap": true,
     "esModuleInterop": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "noUnusedLocals": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitReturns": true,
+    "pretty": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "jsx": "react-jsx",
-    "moduleResolution": "node"
+    "strict": true,
+    "target": "es2017",
+    "lib": ["es2017"],
+    "paths": {}
   }
 }
