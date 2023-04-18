@@ -6,3 +6,9 @@ ignorePatterns:
 
 parserOptions:
   project: true
+
+rules:
+  "@typescript-eslint/no-misused-promises":
+    - 2
+    - checksVoidReturn:
+        attributes: false
