@@ -3,25 +3,6 @@ lockfileVersion: '6.0'
 importers:
 
   .:
-    dependencies:
-      '@tanstack/react-query':
-        specifier: ^4.28.0
-        version: 4.28.0(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/client':
-        specifier: ^10.18.0
-        version: 10.18.0(@trpc/server@10.20.0)
-      '@trpc/next':
-        specifier: ^10.18.0
-        version: 10.18.0(@tanstack/react-query@4.28.0)(@trpc/client@10.18.0)(@trpc/react-query@10.18.0)(@trpc/server@10.20.0)(next@13.3.0)(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/react-query':
-        specifier: ^10.18.0
-        version: 10.18.0(@tanstack/react-query@4.28.0)(@trpc/client@10.18.0)(@trpc/server@10.20.0)(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/server':
-        specifier: ^10.18.0
-        version: 10.20.0
-      zod:
-        specifier: ^3.21.4
-        version: 3.21.4
     devDependencies:
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.58.0
