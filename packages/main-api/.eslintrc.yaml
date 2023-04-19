@@ -5,5 +5,4 @@ ignorePatterns:
   - "!**/*"
 
 parserOptions:
-  project:
-    - packages/main-api/tsconfig.json
+  project: true
