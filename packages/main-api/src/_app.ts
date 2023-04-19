@@ -1,4 +1,4 @@
-import { router, publicProcedure } from "./trpc";
+import { router, publicProcedure } from "./lib/trpc";
 import { z } from "zod";
 const appRouter = router({
   // Create publicProcedure at path 'hello'

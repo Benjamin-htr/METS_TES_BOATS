@@ -1,0 +1,19 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      =  "mysql://mael:AVNS_6GOhB4oVcdVrnK6EKjt@http://db-mysql-lon1-38333-do-user-13918713-0.b.db.ondigitalocean.com:25060/defaultdb"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Todo {
+  id          String   @id @default(cuid())
+  title       String
+  isCompleted Boolean
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
