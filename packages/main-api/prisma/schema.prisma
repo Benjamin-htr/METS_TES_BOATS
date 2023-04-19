@@ -3,18 +3,103 @@
 
 datasource db {
   provider = "mysql"
-  url      =  "mysql://mael:AVNS_6GOhB4oVcdVrnK6EKjt@http://db-mysql-lon1-38333-do-user-13918713-0.b.db.ondigitalocean.com:25060/defaultdb"
+  url      = "mysql://mael:AVNS_Q4iVQUvJi7-XIsi9G7l@db-mysql-lon1-71854-do-user-13918713-0.b.db.ondigitalocean.com:25060/defaultdb?ssl-mode=REQUIRED"
 }
 
 generator client {
   provider = "prisma-client-js"
 }
 
-model Todo {
-  id          String   @id @default(cuid())
-  title       String
-  isCompleted Boolean
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+model User {
+  id        Int       @id @default(autoincrement())
+  username  String
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Traject   Traject[]
 }
 
+model Traject {
+  id          Int          @id @default(autoincrement())
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  user        User         @relation(fields: [userId], references: [id])
+  userId      Int
+  Boat        Boat?        @relation(fields: [boatId], references: [id])
+  boatId      Int?
+  Speed       Speed?
+  Wave        Wave?
+  Wind        Wind?
+  Coordinates Coordinates?
+}
+
+model BoatModel {
+  id        Int      @id @default(autoincrement())
+  name      String
+  maxSpeed  Float
+  maxFuel   Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Boat      Boat[]
+}
+
+model Boat {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  name        String
+  BoatModel   BoatModel @relation(fields: [boatModelId], references: [id])
+  boatModelId Int
+  Traject     Traject[]
+  Fuel        Fuel?
+  fuelId      Int?
+}
+
+model Fuel {
+  id          Int      @id @default(autoincrement())
+  consumption Float
+  remaining   Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Boat        Boat     @relation(fields: [boatId], references: [id])
+  boatId      Int      @unique
+}
+
+model Speed {
+  id        Int      @id @default(autoincrement())
+  speed     Float //en noeuds
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Traject   Traject  @relation(fields: [trajectId], references: [id])
+  trajectId Int      @unique
+}
+
+model Wave {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  height    Float //en mètres
+  frequency Float //en hertz
+  Traject   Traject  @relation(fields: [trajectId], references: [id])
+  trajectId Int      @unique
+}
+
+model Wind {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  direction Float //en degrés
+  speed     Float //en noeuds
+  Traject   Traject  @relation(fields: [trajectId], references: [id])
+  trajectId Int      @unique
+}
+
+model Coordinates {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  latitude  Float
+  longitude Float
+  Traject   Traject  @relation(fields: [trajectId], references: [id])
+  trajectId Int      @unique
+}
