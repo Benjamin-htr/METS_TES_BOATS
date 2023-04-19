@@ -2,7 +2,7 @@
   "name": "@pnpm-monorepo/main-api",
   "version": "1.0.0",
   "description": "",
-  "main": "client.ts",
+  "main": "main.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev ./src/main.ts",
