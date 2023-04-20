@@ -1,5 +1,5 @@
 {
-  "name": "@pnpm-monorepo/shared",
+  "name": "@pnpm-monorepo/schemas",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://mael:AVNS_Q4iVQUvJi7-XIsi9G7l@db-mysql-lon1-71854-do-user-13918713-0.b.db.ondigitalocean.com:25060/defaultdb?ssl-mode=REQUIRED"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -12,7 +12,7 @@ generator client {
 
 model User {
   id        Int       @id @default(autoincrement())
-  username  String
+  username  String    @unique
   password  String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

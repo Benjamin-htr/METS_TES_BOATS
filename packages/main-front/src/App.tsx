@@ -1,4 +1,3 @@
-import { sayHi } from "@pnpm-monorepo/shared";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
 import { History } from "./pages/History/History";
@@ -31,7 +30,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  sayHi("test");
   return (
     <div className="App">
       <RouterProvider router={router} />
