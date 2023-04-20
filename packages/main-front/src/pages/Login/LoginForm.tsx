@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { style } from "@macaron-css/core";
+import { loginUserSchema } from "@pnpm-monorepo/schemas";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../../components/atoms/Button/Button";
@@ -8,18 +9,14 @@ import { Input } from "../../components/atoms/Input/Input";
 
 const loginFormStyle = style({});
 
-const LoginSchema = z.object({
-  username: z.string().min(3).max(30),
-  password: z.string().min(12).max(20),
-});
-type LoginSchemaType = z.infer<typeof LoginSchema>;
+type LoginSchemaType = z.infer<typeof loginUserSchema>;
 
 export const LoginForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginSchemaType>({ resolver: zodResolver(LoginSchema) });
+  } = useForm<LoginSchemaType>({ resolver: zodResolver(loginUserSchema) });
 
   const onSubmit: SubmitHandler<LoginSchemaType> = (data) => console.log(data);
 

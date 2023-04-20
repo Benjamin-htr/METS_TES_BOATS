@@ -8,7 +8,7 @@ const app: Application = express();
 app.use(cors());
 
 app.get("/", (req: Request, res: Response) => {
-  res.json({ message: "Hello world!" });
+  res.json({ message: "Welcome to main api" });
 });
 
 app.use(
@@ -21,5 +21,5 @@ app.use(
 
 const PORT: number = Number(process.env.PORT) || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on Port: ${PORT}`);
+  console.log(`🚀 Server running on port: ${PORT} at this url : http://localhost:${PORT}`);
 });
