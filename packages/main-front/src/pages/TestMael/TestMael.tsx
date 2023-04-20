@@ -1,22 +1,4 @@
-<<<<<<< HEAD
 import { trpc } from "../../lib/trpc";
-=======
-import { useState } from "react";
-
-export const TestMael = () => {
-  const [test, setTest] = useState(0);
-
-  return (
-    <div>
-      <button onClick={() => setTest(test + 1)}>Test</button>
-      <p>{test}</p>
-    </div>
-  );
-};
-
-/*
-import { trpc } from "../lib/trpc";
->>>>>>> 2d83f8f805ee00fa018745438734bcf211187b71
 
 export default function ListTodos() {
   function handleDelete() {}
@@ -91,8 +73,6 @@ export default function ListTodos() {
     </ul>
   );
 }
-<<<<<<< HEAD
-
 // import { trpc } from "../../lib/trpc";
 // import { useState } from "react";
 
@@ -106,6 +86,3 @@ export default function ListTodos() {
 //     </div>
 //   );
 // };
-=======
-*/
->>>>>>> 2d83f8f805ee00fa018745438734bcf211187b71
