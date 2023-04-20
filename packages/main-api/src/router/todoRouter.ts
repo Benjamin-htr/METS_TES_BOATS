@@ -1,13 +1,13 @@
+import { z } from "zod";
 import { prisma } from "../lib/prismaClient";
 import { trpc } from "../lib/trpc";
-import { z } from "zod";
 
 export const todoRouter = trpc.router({
   list: trpc.procedure.query(({ ctx }) => {
     // console.log(ctx.user);
     // const todos = await prisma.todo.findMany()
     // return todos
-    return prisma.todo.findMany();
+    return prisma.user.findMany();
   }),
   create: trpc.procedure.input(z.object({ title: z.string() })).mutation(({ input }) => {
     const title = input.title;
