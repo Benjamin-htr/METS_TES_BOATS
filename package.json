@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "main-front": "cd ./packages/main-front && pnpm run dev",
-    "main-api": "cd ./packages/main-api && pnpm run dev"
+    "main-api": "cd ./packages/main-api && pnpm run dev",
+    "generate-prisma": "cd ./packages/main-api && pnpm prisma generate"
   },
   "keywords": [],
   "author": "",
