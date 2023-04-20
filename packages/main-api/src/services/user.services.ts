@@ -7,10 +7,10 @@ export const createUser = async (input: Prisma.UserCreateInput) => {
   });
 };
 
-export const findUser = async (where: Partial<Prisma.UserCreateInput>, select?: Prisma.UserSelect) => {
+export const findUser = async (where: Prisma.UserWhereInput, select?: Prisma.UserSelect) => {
   return await prisma.user.findFirst({
-    where,
-    select,
+    where: where,
+    select: select,
   });
 };
 

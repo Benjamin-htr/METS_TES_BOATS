@@ -1,16 +1,17 @@
 import { TRPCError } from "@trpc/server";
 import { Request, Response } from "express";
-import { findUniqueUser } from "../services/user.services";
+import { prisma } from "../lib/prismaClient";
 import { verifyJwt } from "../utils/jwt";
 
 export const deserializeUser = async ({ req, res }: { req: Request; res: Response }) => {
   try {
     // Get the token
-    let access_token;
+    let access_token: string | undefined;
+    const cookies = req.cookies as { access_token: string };
     if (req.headers.authorization?.startsWith("Bearer")) {
       access_token = req.headers.authorization.split(" ")[1];
-    } else if (req.cookies["access_token"]) {
-      access_token = req.cookies.access_token;
+    } else if (cookies.access_token) {
+      access_token = cookies.access_token;
     }
 
     const notAuthenticated = {
@@ -24,21 +25,25 @@ export const deserializeUser = async ({ req, res }: { req: Request; res: Respons
     }
 
     // Validate Access Token
-    const decoded = verifyJwt<{ sub: string }>(access_token, "accessTokenPublicKey");
+    const decoded = verifyJwt<{ sub: string }>(access_token);
 
     if (!decoded) {
       return notAuthenticated;
     }
 
     // Check if user has a valid session
-    const session = await redisClient.get(decoded.sub);
+    //const session = await redisClient.get(decoded.sub);
 
-    if (!session) {
-      return notAuthenticated;
-    }
+    // if (!session) {
+    //   return notAuthenticated;
+    // }
 
     // Check if user still exist
-    const user = await findUniqueUser({ id: JSON.parse(session).id });
+    const user = await prisma.user.findUnique({
+      where: {
+        id: parseInt(decoded.sub),
+      },
+    });
 
     if (!user) {
       return notAuthenticated;
@@ -49,10 +54,13 @@ export const deserializeUser = async ({ req, res }: { req: Request; res: Respons
       res,
       user,
     };
-  } catch (err: unknown) {
-    throw new TRPCError({
-      code: "INTERNAL_SERVER_ERROR",
-      message: err.message,
-    });
+  } catch (err) {
+    if (err instanceof Error) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: err.message,
+      });
+    }
+    throw err;
   }
 };

@@ -2,11 +2,13 @@ import { trpc } from "../../lib/trpc";
 
 export function TestMael() {
   const helloQuery = trpc.hello.useQuery();
+  const user = trpc.user.getMe.useQuery();
 
   return (
     <div>
       <p>{helloQuery.isLoading}</p>
       <p>{helloQuery.data}</p>
+      <p>{user.data?.data.user?.id}</p>
     </div>
   );
 }

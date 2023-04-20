@@ -1,4 +1,5 @@
 import * as trpcExpress from "@trpc/server/adapters/express";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { Application, Request, Response } from "express";
@@ -9,7 +10,8 @@ import { appRouter } from "./router/_app";
 dotenv.config({ path: path.join(__dirname, "../.env") });
 
 const app: Application = express();
-app.use(cors());
+
+app.use(cors(), cookieParser());
 
 app.get("/", (req: Request, res: Response) => {
   res.json({ message: "Welcome to main api" });

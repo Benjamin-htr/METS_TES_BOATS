@@ -1,18 +1,9 @@
-import { router } from "@trpc/server";
-import { Request, Response } from "express";
-import { prisma } from "../lib/prismaClient";
+import { createUserSchema, loginUserSchema } from "@pnpm-monorepo/schemas";
+import { loginHandler, logoutHandler, registerHandler } from "../controllers/auth.controller";
 import { trpc } from "../lib/trpc";
 
-export function createContext({ req, res }: { req: Request; res: Response }) {
-  return { req, res, prisma };
-}
-
-export type Context = ReturnType<typeof createContext>;
-
-export function createRouter() {
-  return router<Context>();
-}
-
-export const authRouter = trpc.middleware(async ({ ctx, next }) => {
-  return next();
+export const authRouter = trpc.router({
+  registerUser: trpc.procedure.input(createUserSchema).mutation(({ input }) => registerHandler({ input })),
+  loginUser: trpc.procedure.input(loginUserSchema).mutation(({ input, ctx }) => loginHandler({ input, ctx })),
+  logoutUser: trpc.procedure.mutation(({ ctx }) => logoutHandler({ ctx })),
 });
