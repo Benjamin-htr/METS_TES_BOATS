@@ -1,14 +1,14 @@
 import { trpc } from "../../lib/trpc";
 
 export function TestMael() {
-  const helloQuery = trpc.user.useQuery({ name: "Bob" });
-  const goodbyeMutation = trpc.user.useMutation();
+  const helloQuery = trpc.user.all.useQuery();
+  // const goodbyeMutation = trpc.user.useMutation();
 
   return (
     <div>
       <p>{helloQuery.data?.greeting}</p>
 
-      <button onClick={() => goodbyteMutation.mutate()}>Say Goodbye</button>
+      {/* <button onClick={() => goodbyteMutation.mutate()}>Say Goodbye</button> */}
     </div>
   );
 }
