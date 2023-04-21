@@ -1,3 +1,4 @@
+import { ChakraProvider } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
 import { useState } from "react";
@@ -8,6 +9,7 @@ import { History } from "./pages/History/History";
 import { Home } from "./pages/Home/Home";
 import { Login } from "./pages/Login/Login";
 import { NewTraject } from "./pages/NewTraject/NewTraject";
+import { Signup } from "./pages/Signup/Signup";
 import { TestMael } from "./pages/TestMael/TestMael";
 
 const router = createBrowserRouter([
@@ -22,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
   },
   {
     path: "/new_traject",
@@ -49,9 +55,11 @@ function App() {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        <div className="App">
-          <RouterProvider router={router} />
-        </div>
+        <ChakraProvider>
+          <div className="App">
+            <RouterProvider router={router} />
+          </div>
+        </ChakraProvider>
       </QueryClientProvider>
     </trpc.Provider>
   );

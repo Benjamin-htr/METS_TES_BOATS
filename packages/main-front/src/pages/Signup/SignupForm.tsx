@@ -1,26 +1,21 @@
 import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { style } from "@macaron-css/core";
-import { loginUserSchema } from "@pnpm-monorepo/schemas";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { createUserSchema } from "@pnpm-monorepo/schemas";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const loginFormStyle = style({});
+type createUserSchemaType = z.infer<typeof createUserSchema>;
 
-type LoginSchemaType = z.infer<typeof loginUserSchema>;
-
-export const LoginForm = () => {
+export const SignupForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginSchemaType>({ resolver: zodResolver(loginUserSchema) });
-
-  const onSubmit: SubmitHandler<LoginSchemaType> = (data) => console.log(data);
+  } = useForm<createUserSchemaType>({ resolver: zodResolver(createUserSchema) });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={loginFormStyle}>
-      <Flex direction="column" gap="md">
+    <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <Flex direction={"column"} gap={"6px"}>
         <FormControl isInvalid={errors.username ? true : false} isRequired>
           <FormLabel htmlFor="username">Nom d'utilisateur</FormLabel>
           <Input id="username" placeholder="nom d'utilisateur" {...register("username")} />
@@ -31,7 +26,14 @@ export const LoginForm = () => {
           <Input id="password" placeholder="mot de passe" {...register("password")} />
           <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
         </FormControl>
-        <Button>Se connecter</Button>
+        <FormControl isInvalid={errors.confirmPassword ? true : false} isRequired>
+          <FormLabel htmlFor="confirmPassword">Confirmation du mot de passe</FormLabel>
+          <Input id="confirmPassword" placeholder="confirmation du mot de passe" {...register("confirmPassword")} />
+          <FormErrorMessage>{errors.confirmPassword?.message}</FormErrorMessage>
+        </FormControl>
+        <Button mt={4} colorScheme="teal" type="submit" alignSelf={"flex-end"}>
+          S'inscrire
+        </Button>
       </Flex>
     </form>
   );

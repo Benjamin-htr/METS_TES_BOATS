@@ -1,5 +1,5 @@
+import { Flex } from "@chakra-ui/react";
 import { style } from "@macaron-css/core";
-import { Flex } from "../../components/atoms/Flex/Flex";
 import { MenuLink } from "../../components/atoms/Link/MenuLink";
 
 const homeStyle = style({

@@ -9,6 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.5.5",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@hookform/resolvers": "^3.1.0",
     "@macaron-css/core": "^1.2.0",
     "@macaron-css/react": "^1.2.1",
@@ -19,6 +22,7 @@
     "@trpc/client": "^10.20.0",
     "@trpc/react-query": "^10.20.0",
     "@trpc/server": "^10.20.0",
+    "framer-motion": "^10.12.4",
     "leaflet": "^1.9.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
