@@ -16,9 +16,9 @@ export const Signup = () => {
         <CardFooter>
           <Text>
             Vous n'avez pas de compte ?{" "}
-            <RouteLink to="/login">
-              <Link>connectez vous</Link>
-            </RouteLink>
+            <Link as={RouteLink} to="/login">
+              connectez vous
+            </Link>
           </Text>
         </CardFooter>
       </Card>

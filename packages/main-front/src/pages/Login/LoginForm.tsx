@@ -1,12 +1,9 @@
 import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { style } from "@macaron-css/core";
 import { loginUserSchema } from "@pnpm-monorepo/schemas";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { trpc } from "../../lib/trpc";
-
-const loginFormStyle = style({});
 
 type LoginSchemaType = z.infer<typeof loginUserSchema>;
 
@@ -24,7 +21,7 @@ export const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={loginFormStyle}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Flex direction="column" gap="md">
         <FormControl isInvalid={errors.username ? true : false} isRequired>
           <FormLabel htmlFor="username">Nom d'utilisateur</FormLabel>
