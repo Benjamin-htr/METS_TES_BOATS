@@ -1,4 +1,4 @@
-import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input } from "@chakra-ui/react";
+import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input, useToast } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createUserSchema } from "@pnpm-monorepo/schemas";
 import { useForm } from "react-hook-form";
@@ -14,7 +14,28 @@ export const SignupForm = () => {
     formState: { errors },
   } = useForm<createUserSchemaType>({ resolver: zodResolver(createUserSchema) });
 
-  const signupMutation = trpc.auth.registerUser.useMutation();
+  const toast = useToast();
+
+  const signupMutation = trpc.auth.registerUser.useMutation({
+    onSuccess: () => {
+      toast({
+        title: "Inscription réussie",
+        description: "Vous pouvez maintenant vous connecter",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Erreur lors de l'inscription",
+        description: error.message,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    },
+  });
 
   return (
     <form
