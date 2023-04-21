@@ -1,18 +1,10 @@
 import { Flex } from "@chakra-ui/react";
-import { style } from "@macaron-css/core";
-import { MenuLink } from "../../components/atoms/Link/MenuLink";
-
-const homeStyle = style({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  height: "100%",
-  //backgroundColor: "white",
-});
+import { MenuLink } from "../../components/atoms/MenuLink/MenuLink";
+import classes from "./home.module.css";
 
 export const Home = () => {
   return (
-    <div className={homeStyle}>
+    <div className={classes.home}>
       <Flex direction="column">
         <MenuLink to={"/new_traject"}>Nouveau trajet</MenuLink>
         <MenuLink to={"/history"}>Historique</MenuLink>

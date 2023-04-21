@@ -1,0 +1,19 @@
+.MenuLink {
+  color: black;
+  font-size: 2em;
+  font-family: Overwave;
+  font-weight: bold;
+  text-decoration: none;
+  height: fit-content;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.MenuLink:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.MenuLink:hover {
+  text-decoration: underline;
+}

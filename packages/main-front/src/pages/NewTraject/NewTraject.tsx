@@ -1,18 +1,8 @@
-import { style } from "@macaron-css/core";
 import { LatLng, LatLngExpression } from "leaflet";
 import { Fragment, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMapEvent } from "react-leaflet";
 import { boatMapIcon } from "./boatMapIcon";
-
-const newTrajectStyle = style({
-  height: "100%",
-});
-
-const mapStyle = style({
-  selectors: {
-    [`${newTrajectStyle} &`]: { height: "400px", width: "100%" },
-  },
-});
+import classes from "./newTraject.module.css";
 
 const LocationMarker = () => {
   const [position, setPosition] = useState<LatLng>(new LatLng(0, 0));
@@ -34,11 +24,11 @@ export const NewTraject = () => {
   const boatPosition: LatLngExpression = [23, -173];
 
   return (
-    <div className={newTrajectStyle}>
+    <div className={classes.newTraject}>
       <MapContainer
         center={cameraPosition}
         zoom={2}
-        className={mapStyle}
+        className={classes.map}
         keyboard={false}
         dragging={false}
         zoomControl={false}
