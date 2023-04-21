@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createUserSchema } from "@pnpm-monorepo/schemas";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { trpc } from "../../lib/trpc";
 
 type createUserSchemaType = z.infer<typeof createUserSchema>;
 
@@ -13,8 +14,15 @@ export const SignupForm = () => {
     formState: { errors },
   } = useForm<createUserSchemaType>({ resolver: zodResolver(createUserSchema) });
 
+  const signupMutation = trpc.auth.registerUser.useMutation();
+
   return (
-    <form onSubmit={handleSubmit((data) => console.log(data))}>
+    <form
+      onSubmit={handleSubmit((data) => {
+        console.log(data);
+        signupMutation.mutate(data);
+      })}
+    >
       <Flex direction={"column"} gap={"6px"}>
         <FormControl isInvalid={errors.username ? true : false} isRequired>
           <FormLabel htmlFor="username">Nom d'utilisateur</FormLabel>
@@ -31,7 +39,7 @@ export const SignupForm = () => {
           <Input id="confirmPassword" placeholder="confirmation du mot de passe" {...register("confirmPassword")} />
           <FormErrorMessage>{errors.confirmPassword?.message}</FormErrorMessage>
         </FormControl>
-        <Button mt={4} colorScheme="teal" type="submit" alignSelf={"flex-end"}>
+        <Button mt={4} colorScheme="teal" type="submit" alignSelf={"flex-end"} isLoading={signupMutation.isLoading}>
           S'inscrire
         </Button>
       </Flex>

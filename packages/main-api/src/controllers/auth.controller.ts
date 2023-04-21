@@ -24,7 +24,8 @@ const accessTokenCookieOptions: CookieOptions = {
 export const registerHandler = async ({ input }: { input: z.infer<typeof createUserSchema> }) => {
   try {
     const hashedPassword = await bcrypt.hash(input.password, 12);
-    const user = prisma.user.create({
+
+    const user = await prisma.user.create({
       data: {
         username: input.username,
         password: hashedPassword,

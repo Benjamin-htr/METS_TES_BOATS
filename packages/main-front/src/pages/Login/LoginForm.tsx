@@ -4,6 +4,7 @@ import { style } from "@macaron-css/core";
 import { loginUserSchema } from "@pnpm-monorepo/schemas";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
+import { trpc } from "../../lib/trpc";
 
 const loginFormStyle = style({});
 
@@ -16,7 +17,11 @@ export const LoginForm = () => {
     formState: { errors },
   } = useForm<LoginSchemaType>({ resolver: zodResolver(loginUserSchema) });
 
-  const onSubmit: SubmitHandler<LoginSchemaType> = (data) => console.log(data);
+  const loginMutation = trpc.auth.loginUser.useMutation();
+
+  const onSubmit: SubmitHandler<LoginSchemaType> = (data) => {
+    loginMutation.mutate(data);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={loginFormStyle}>
@@ -31,7 +36,9 @@ export const LoginForm = () => {
           <Input id="password" placeholder="mot de passe" {...register("password")} />
           <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
         </FormControl>
-        <Button>Se connecter</Button>
+        <Button mt={4} colorScheme="teal" type="submit" alignSelf={"flex-end"} isLoading={loginMutation.isLoading}>
+          Se connecter
+        </Button>
       </Flex>
     </form>
   );
