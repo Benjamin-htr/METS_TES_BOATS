@@ -1,14 +1,24 @@
+import { Button } from "@chakra-ui/react";
 import { trpc } from "../../lib/trpc";
 
 export function TestMael() {
   const helloQuery = trpc.hello.useQuery();
   const user = trpc.user.getMe.useQuery();
+  const logout = trpc.auth.logoutUser.useMutation();
 
   return (
     <div>
       <p>{helloQuery.isLoading}</p>
       <p>{helloQuery.data}</p>
-      <p>{user.data?.data.user?.id}</p>
+      <p>Bonjour {user.data?.data.user?.username} !</p>
+      <Button
+        onClick={() => {
+          logout.mutate();
+        }}
+        isLoading={logout.isLoading}
+      >
+        Déconnexion
+      </Button>
     </div>
   );
 }

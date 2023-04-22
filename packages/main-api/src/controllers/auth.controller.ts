@@ -8,10 +8,10 @@ import { prisma } from "../lib/prismaClient";
 import { Context } from "../lib/trpc";
 import { signJwt } from "../utils/jwt";
 
-const accessTokenExpiresIn = 15;
+const accessTokenExpiresIn = 15 * 60 * 1000;
 
 const cookieOptions: CookieOptions = {
-  httpOnly: true,
+  httpOnly: false,
   secure: process.env.NODE_ENV === "production",
   sameSite: "lax",
 };
@@ -24,7 +24,8 @@ const accessTokenCookieOptions: CookieOptions = {
 export const registerHandler = async ({ input }: { input: z.infer<typeof createUserSchema> }) => {
   try {
     const hashedPassword = await bcrypt.hash(input.password, 12);
-    const user = prisma.user.create({
+
+    const user = await prisma.user.create({
       data: {
         username: input.username,
         password: hashedPassword,
@@ -77,6 +78,7 @@ export const loginHandler = async ({ input, ctx }: { input: z.infer<typeof login
 
     // Send Access Token in Cookie
     ctx.res.cookie("access_token", access_token, accessTokenCookieOptions);
+
     ctx.res.cookie("logged_in", true, {
       ...accessTokenCookieOptions,
       httpOnly: false,
