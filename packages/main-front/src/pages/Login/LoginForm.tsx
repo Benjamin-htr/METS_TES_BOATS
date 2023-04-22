@@ -2,12 +2,15 @@ import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input } from "@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginUserSchema } from "@pnpm-monorepo/schemas";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { trpc } from "../../lib/trpc";
 
 type LoginSchemaType = z.infer<typeof loginUserSchema>;
 
 export const LoginForm = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -16,8 +19,7 @@ export const LoginForm = () => {
 
   const loginMutation = trpc.auth.loginUser.useMutation({
     onSuccess: (data) => {
-      console.log("success");
-      localStorage.setItem("access_token", data.access_token);
+      navigate("/");
     },
   });
 
