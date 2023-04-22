@@ -14,7 +14,12 @@ export const LoginForm = () => {
     formState: { errors },
   } = useForm<LoginSchemaType>({ resolver: zodResolver(loginUserSchema) });
 
-  const loginMutation = trpc.auth.loginUser.useMutation();
+  const loginMutation = trpc.auth.loginUser.useMutation({
+    onSuccess: (data) => {
+      console.log("success");
+      localStorage.setItem("access_token", data.access_token);
+    },
+  });
 
   const onSubmit: SubmitHandler<LoginSchemaType> = (data) => {
     loginMutation.mutate(data);

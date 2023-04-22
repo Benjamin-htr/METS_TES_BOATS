@@ -7,11 +7,19 @@ import path from "path";
 import { createContext } from "./lib/trpc";
 import { appRouter } from "./router/_app";
 
+process.env.TZ = "Europe/Paris";
+
 dotenv.config({ path: path.join(__dirname, "../.env") });
 
 const app: Application = express();
 
-app.use(cors(), cookieParser());
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: ["http://localhost:5002", "http://localhost:3000"],
+    credentials: true,
+  })
+);
 
 app.get("/", (req: Request, res: Response) => {
   res.json({ message: "Welcome to main api" });
