@@ -102,4 +102,5 @@ model Coordinates {
   longitude Float
   Traject   Traject  @relation(fields: [trajectId], references: [id])
   trajectId Int      @unique
+  BoatId    Int
 }
