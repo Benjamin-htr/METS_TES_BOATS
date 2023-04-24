@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createUserSchema } from "@pnpm-monorepo/schemas";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { PasswordInput } from "../../components/atoms/PasswordInput/PasswordInput";
 import { trpc } from "../../lib/trpc";
 
 type createUserSchemaType = z.infer<typeof createUserSchema>;
@@ -52,12 +53,16 @@ export const SignupForm = () => {
         </FormControl>
         <FormControl isInvalid={errors.password ? true : false} isRequired>
           <FormLabel htmlFor="password">Mot de passe</FormLabel>
-          <Input id="password" placeholder="mot de passe" {...register("password")} />
+          <PasswordInput id="password" placeholder="mot de passe" {...register("password")} />
           <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={errors.confirmPassword ? true : false} isRequired>
           <FormLabel htmlFor="confirmPassword">Confirmation du mot de passe</FormLabel>
-          <Input id="confirmPassword" placeholder="confirmation du mot de passe" {...register("confirmPassword")} />
+          <PasswordInput
+            id="confirmPassword"
+            placeholder="confirmation du mot de passe"
+            {...register("confirmPassword")}
+          />
           <FormErrorMessage>{errors.confirmPassword?.message}</FormErrorMessage>
         </FormControl>
         <Button mt={4} colorScheme="teal" type="submit" alignSelf={"flex-end"} isLoading={signupMutation.isLoading}>

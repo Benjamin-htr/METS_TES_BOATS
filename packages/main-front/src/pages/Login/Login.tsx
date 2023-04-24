@@ -15,7 +15,7 @@ export const Login = () => {
         <CardFooter>
           <Text textAlign={"center"}>
             Vous n'avez pas de compte ?<br />
-            <Link as={RouteLink} to="/signup">
+            <Link as={RouteLink} to="/signup" textDecor={"underline"}>
               inscrivez vous
             </Link>
           </Text>

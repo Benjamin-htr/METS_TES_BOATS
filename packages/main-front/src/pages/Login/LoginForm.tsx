@@ -5,6 +5,7 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
+import { PasswordInput } from "../../components/atoms/PasswordInput/PasswordInput";
 import { trpc } from "../../lib/trpc";
 
 type LoginSchemaType = z.infer<typeof loginUserSchema>;
@@ -21,7 +22,7 @@ export const LoginForm = () => {
 
   const loginMutation = trpc.auth.loginUser.useMutation({
     onSuccess: (data) => {
-      navigate("/");
+      navigate("/new_traject");
     },
     onError: (error) => {
       setError(error.message);
@@ -42,7 +43,7 @@ export const LoginForm = () => {
         </FormControl>
         <FormControl isInvalid={errors.password ? true : false} isRequired>
           <FormLabel htmlFor="password">Mot de passe</FormLabel>
-          <Input id="password" placeholder="mot de passe" {...register("password")} />
+          <PasswordInput id="password" placeholder="mot de passe" {...register("password")} />
           <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
         </FormControl>
         {error && <Text color={"red"}>{error}</Text>}
