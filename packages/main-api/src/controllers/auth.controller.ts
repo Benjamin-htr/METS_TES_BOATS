@@ -8,7 +8,7 @@ import { prisma } from "../lib/prismaClient";
 import { Context } from "../lib/trpc";
 import { signJwt } from "../utils/jwt";
 
-const accessTokenExpiresIn = 30;
+const accessTokenExpiresIn = 60;
 
 const cookieOptions: CookieOptions = {
   httpOnly: false,
