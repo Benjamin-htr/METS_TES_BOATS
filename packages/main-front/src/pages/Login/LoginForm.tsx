@@ -22,7 +22,7 @@ export const LoginForm = () => {
 
   const loginMutation = trpc.auth.loginUser.useMutation({
     onSuccess: (data) => {
-      navigate("/new_traject");
+      navigate("/");
     },
     onError: (error) => {
       setError(error.message);
