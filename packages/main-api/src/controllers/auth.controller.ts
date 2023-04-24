@@ -8,7 +8,7 @@ import { prisma } from "../lib/prismaClient";
 import { Context } from "../lib/trpc";
 import { signJwt } from "../utils/jwt";
 
-const accessTokenExpiresIn = 15 * 60 * 1000;
+const accessTokenExpiresIn = 60;
 
 const cookieOptions: CookieOptions = {
   httpOnly: false,
@@ -64,7 +64,7 @@ export const loginHandler = async ({ input, ctx }: { input: z.infer<typeof login
     if (!user || !(await bcrypt.compare(input.password, user.password))) {
       throw new TRPCError({
         code: "BAD_REQUEST",
-        message: "Invalid username or password",
+        message: "Nom d'utilisateur ou mot de passe incorrect",
       });
     }
 

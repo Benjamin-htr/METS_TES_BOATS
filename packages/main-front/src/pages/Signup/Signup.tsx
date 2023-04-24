@@ -7,16 +7,15 @@ export const Signup = () => {
     <Flex height={"100%"} align={"center"} justify={"center"}>
       <Card align="center">
         <CardHeader>
-          <Heading size="md"> Inscription</Heading>
+          <Heading size="md">Inscription</Heading>
         </CardHeader>
         <CardBody>
-          <Text mb={6}>Veuillez remplir le formulaire suivant afin de vous inscrire sur notre plateforme</Text>
           <SignupForm />
         </CardBody>
         <CardFooter>
-          <Text>
-            Vous n'avez pas de compte ?{" "}
-            <Link as={RouteLink} to="/login">
+          <Text textAlign={"center"}>
+            Vous avez déjà un compte ?<br />
+            <Link as={RouteLink} to="/login" textDecor={"underline"}>
               connectez vous
             </Link>
           </Text>
