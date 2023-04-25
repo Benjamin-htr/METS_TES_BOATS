@@ -46,17 +46,18 @@ model BoatModel {
 }
 
 model Boat {
-  id          Int           @id @default(autoincrement())
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  name        String
-  BoatModel   BoatModel     @relation(fields: [boatModelId], references: [id])
-  boatModelId Int
-  Traject     Traject[]
-  Fuel        Fuel[]
-  User        User?         @relation(fields: [userId], references: [id])
-  userId      Int?
-  Coordinates Coordinates[]
+  id            Int         @id @default(autoincrement())
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  name          String
+  BoatModel     BoatModel   @relation(fields: [boatModelId], references: [id])
+  boatModelId   Int
+  Traject       Traject[]
+  Fuel          Fuel[]
+  User          User?       @relation(fields: [userId], references: [id])
+  userId        Int?
+  Coordinates   Coordinates @relation(fields: [coordinatesId], references: [id])
+  coordinatesId Int         @unique
 }
 
 model Fuel {
@@ -104,7 +105,6 @@ model Coordinates {
   updatedAt DateTime @updatedAt
   latitude  Float
   longitude Float
-  Boat      Boat?    @relation(fields: [boatId], references: [id])
-  boatId    Int?     @unique
+  Boat      Boat?
   Traject   Traject?
 }
