@@ -2,7 +2,6 @@ import { Box, Text } from "@chakra-ui/react";
 import { LatLng, LeafletMouseEvent } from "leaflet";
 import { Fragment, useState } from "react";
 import { MapContainer, Marker, TileLayer, useMapEvent } from "react-leaflet";
-import { MobileMenu } from "../../components/molecules/menu/MobileMenu";
 import { boatMapIcon } from "./boatMapIcon";
 import classes from "./newTraject.module.css";
 
@@ -66,7 +65,6 @@ export const NewTraject = () => {
           ? `Destination: ${(boatPosition.distanceTo(destinationPosition) / 1000).toFixed(0)} kms`
           : "Clicquez sur la carte pour définir une destination"}
       </Text>
-      <MobileMenu />
     </div>
   );
 };
