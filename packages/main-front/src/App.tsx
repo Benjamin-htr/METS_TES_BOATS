@@ -13,6 +13,7 @@ import { Home } from "./pages/Home/Home";
 import { Login } from "./pages/Login/Login";
 import { NewTraject } from "./pages/NewTraject/NewTraject";
 import { NotFound } from "./pages/NotFound/NotFound";
+import { Profile } from "./pages/Profile/Profile";
 import { Signup } from "./pages/Signup/Signup";
 import { TestMael } from "./pages/TestMael/TestMael";
 
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/profile",
+            element: <Profile />,
           },
         ],
       },

@@ -13,6 +13,10 @@ export const MobileMenu = (props: MobileMenuProps) => {
   const buttonSize = 85;
   const [isOpen, setIsOpen] = useState(false);
 
+  const closeMenu = () => {
+    if (props.closeOnClick) setIsOpen(false);
+  };
+
   return (
     <Fragment>
       <AnimatePresence mode="wait">
@@ -31,9 +35,18 @@ export const MobileMenu = (props: MobileMenuProps) => {
             exit={{ width: 0, height: 0, opacity: 0, transition: { duration: 0.4 } }}
           >
             <Flex direction="column">
-              <MenuLink to={"/"}>Home</MenuLink>
-              <MenuLink to={"/history"}>Historique</MenuLink>
-              <MenuLink to={"/profile"}>Profil</MenuLink>
+              <MenuLink to={"/"} onClick={closeMenu}>
+                Accueil
+              </MenuLink>
+              <MenuLink to={"/new_traject"} onClick={closeMenu}>
+                Nouveau trajet
+              </MenuLink>
+              <MenuLink to={"/history"} onClick={closeMenu}>
+                Historique
+              </MenuLink>
+              <MenuLink to={"/profile"} onClick={closeMenu}>
+                Profil
+              </MenuLink>
             </Flex>
           </Flex>
         )}

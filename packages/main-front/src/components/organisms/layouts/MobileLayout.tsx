@@ -5,7 +5,7 @@ export const MobileLayout = () => {
   return (
     <>
       <Outlet />
-      <MobileMenu />
+      <MobileMenu closeOnClick />
     </>
   );
 };
