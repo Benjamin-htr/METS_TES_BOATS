@@ -2,6 +2,7 @@ import { Flex, IconButton } from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Fragment, useState } from "react";
 import steeringWheel from "../../../assets/icons/steering-wheel.svg";
+import { MenuLink } from "../../atoms/MenuLink/MenuLink";
 import classes from "./mobileMenu.module.css";
 
 export const MobileMenu = () => {
@@ -19,12 +20,18 @@ export const MobileMenu = () => {
             bottom={0}
             right={0}
             zIndex={900}
-            bg="red"
+            bg="rgb(180, 195, 220)"
             as={motion.div}
             animate={{ width: "100%", height: "100%", opacity: 1, transition: { duration: 0.4 } }}
             initial={{ width: 0, height: 0, opacity: 0 }}
             exit={{ width: 0, height: 0, opacity: 0, transition: { duration: 0.4 } }}
-          />
+          >
+            <Flex direction="column">
+              <MenuLink to={"/new_traject"}>Nouveau trajet</MenuLink>
+              <MenuLink to={"/history"}>Historique</MenuLink>
+              <MenuLink to={"/profile"}>Profil</MenuLink>
+            </Flex>
+          </Flex>
         )}
       </AnimatePresence>
       <IconButton

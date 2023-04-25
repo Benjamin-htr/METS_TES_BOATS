@@ -6,7 +6,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { PublicRoute } from "./components/PublicRoute";
-import { MobileMenu } from "./components/molecules/menu/MobileMenu";
+import { Layout } from "./components/organisms/layouts/Layout";
 import { trpc } from "./lib/trpc";
 import { History } from "./pages/History/History";
 import { Home } from "./pages/Home/Home";
@@ -24,17 +24,21 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
-      // {
-      //   path: "/test_mael",
-      //   element: <TestMael />,
-      // },
       {
-        path: "/new_traject",
-        element: <NewTraject />,
-      },
-      {
-        path: "/history",
-        element: <History />,
+        element: <Layout />,
+        children: [
+          {
+            path: "/new_traject",
+            element: <NewTraject />,
+          },
+          {
+            path: "/history",
+            element: <History />,
+          },
+          {
+            path: "/profile",
+          },
+        ],
       },
     ],
   },
@@ -85,7 +89,6 @@ function App() {
         <ChakraProvider>
           <div className="App">
             <RouterProvider router={router} />
-            <MobileMenu />
           </div>
         </ChakraProvider>
       </QueryClientProvider>

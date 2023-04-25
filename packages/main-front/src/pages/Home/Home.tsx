@@ -8,6 +8,7 @@ export const Home = () => {
       <Flex direction="column">
         <MenuLink to={"/new_traject"}>Nouveau trajet</MenuLink>
         <MenuLink to={"/history"}>Historique</MenuLink>
+        <MenuLink to={"/profile"}>Profil</MenuLink>
       </Flex>
     </div>
   );
