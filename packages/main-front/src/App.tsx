@@ -38,6 +38,10 @@ const router = createBrowserRouter([
           {
             path: "/profile",
           },
+          {
+            path: "/test_mael",
+            element: <TestMael />,
+          },
         ],
       },
     ],
@@ -52,10 +56,6 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup />,
-      },
-      {
-        path: "/test_mael",
-        element: <TestMael />,
       },
     ],
   },

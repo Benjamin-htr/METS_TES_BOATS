@@ -5,12 +5,19 @@ export function TestMael() {
   const helloQuery = trpc.hello.useQuery();
   const user = trpc.user.getMe.useQuery();
   const logout = trpc.auth.logoutUser.useMutation();
+  const test = trpc.data.getCoordinates.useQuery();
 
   return (
     <div>
       <p>{helloQuery.isLoading}</p>
       <p>{helloQuery.data}</p>
       <p>Bonjour {user.data?.data.user?.username} !</p>
+      <p>
+        Le bateau :{" "}
+        {test.data?.map((obj) => (
+          <div>{obj.latitude}</div>
+        ))}
+      </p>
       <Button
         onClick={() => {
           logout.mutate();
