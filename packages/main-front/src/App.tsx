@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { PublicRoute } from "./components/PublicRoute";
+import { MobileMenu } from "./components/molecules/menu/MobileMenu";
 import { trpc } from "./lib/trpc";
 import { History } from "./pages/History/History";
 import { Home } from "./pages/Home/Home";
@@ -84,6 +85,7 @@ function App() {
         <ChakraProvider>
           <div className="App">
             <RouterProvider router={router} />
+            <MobileMenu />
           </div>
         </ChakraProvider>
       </QueryClientProvider>
