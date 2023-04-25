@@ -3,6 +3,7 @@ import jwt, { SignOptions } from "jsonwebtoken";
 
 export const signJwt = (payload: object, options: SignOptions = {}) => {
   const privateKey = fs.readFileSync(__dirname + "/../../keys/private.key", "utf8");
+  console.log(privateKey);
   return jwt.sign(payload, privateKey, {
     ...options,
     algorithm: "RS256",
