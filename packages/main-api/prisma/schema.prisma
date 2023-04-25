@@ -30,7 +30,6 @@ model Traject {
   userId        Int
   Boat          Boat        @relation(fields: [boatId], references: [id])
   boatId        Int
-  Speed         Speed[]
   Wave          Wave[]
   Wind          Wind[]
 }
@@ -54,6 +53,7 @@ model Boat {
   boatModelId   Int
   Traject       Traject[]
   Fuel          Fuel[]
+  Speed         Speed[]
   User          User?       @relation(fields: [userId], references: [id])
   userId        Int?
   Coordinates   Coordinates @relation(fields: [coordinatesId], references: [id])
@@ -75,8 +75,8 @@ model Speed {
   speed     Float //en noeuds
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Traject   Traject  @relation(fields: [trajectId], references: [id])
-  trajectId Int
+  Boat      Boat?    @relation(fields: [boatId], references: [id])
+  boatId    Int?
 }
 
 model Wave {

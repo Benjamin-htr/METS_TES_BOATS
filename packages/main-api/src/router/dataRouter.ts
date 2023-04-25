@@ -16,7 +16,6 @@ export const dataRouter = trpc.router({
       data: {
         latitude: input.latitude,
         longitude: input.logitude,
-        boatId: input.boatId,
       },
     });
     return {
