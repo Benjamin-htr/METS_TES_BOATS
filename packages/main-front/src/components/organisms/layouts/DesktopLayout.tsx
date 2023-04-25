@@ -1,3 +1,10 @@
+import { Outlet } from "react-router-dom";
+
 export const DesktopLayout = () => {
-  return <></>;
+  return (
+    <>
+      <div>Menu navigation</div>
+      <Outlet />
+    </>
+  );
 };

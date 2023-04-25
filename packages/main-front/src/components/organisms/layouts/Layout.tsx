@@ -5,5 +5,5 @@ import { MobileLayout } from "./MobileLayout";
 export const Layout = () => {
   const [isLargerThan800] = useMediaQuery("(min-width: 800px)");
 
-  return <div>{isLargerThan800 ? <DesktopLayout /> : <MobileLayout />}</div>;
+  return <>{isLargerThan800 ? <DesktopLayout /> : <MobileLayout />}</>;
 };

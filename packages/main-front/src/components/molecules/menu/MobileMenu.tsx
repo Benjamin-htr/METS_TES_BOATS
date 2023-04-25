@@ -5,7 +5,11 @@ import steeringWheel from "../../../assets/icons/steering-wheel.svg";
 import { MenuLink } from "../../atoms/MenuLink/MenuLink";
 import classes from "./mobileMenu.module.css";
 
-export const MobileMenu = () => {
+interface MobileMenuProps {
+  closeOnClick?: boolean;
+}
+
+export const MobileMenu = (props: MobileMenuProps) => {
   const buttonSize = 85;
   const [isOpen, setIsOpen] = useState(false);
 
@@ -27,7 +31,7 @@ export const MobileMenu = () => {
             exit={{ width: 0, height: 0, opacity: 0, transition: { duration: 0.4 } }}
           >
             <Flex direction="column">
-              <MenuLink to={"/new_traject"}>Nouveau trajet</MenuLink>
+              <MenuLink to={"/"}>Home</MenuLink>
               <MenuLink to={"/history"}>Historique</MenuLink>
               <MenuLink to={"/profile"}>Profil</MenuLink>
             </Flex>
