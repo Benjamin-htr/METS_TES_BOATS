@@ -33,13 +33,13 @@ export const dataRouter = trpc.router({
     return prisma.boat.findMany();
   }),
   postTraject: trpc.procedure.input(createTrajectSchema).mutation(({ input }) => {
-    const postCoordinates = prisma.traject.create({});
-    return {
-      status: "success",
-      data: {
-        postCoordinates,
-      },
-    };
+    // const postCoordinates = prisma.traject.create({});
+    // return {
+    //   status: "success",
+    //   data: {
+    //     postCoordinates,
+    //   },
+    // };
   }),
   //   getTraject: trpc.procedure.query(({ ctx }) => {
   //     console.log(ctx.user);

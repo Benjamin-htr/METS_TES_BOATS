@@ -3,7 +3,7 @@ import { DesktopLayout } from "./DesktopLayout";
 import { MobileLayout } from "./MobileLayout";
 
 export const Layout = () => {
-  const [isLargerThan800] = useMediaQuery("(min-width: 800px)");
+  const [isLargerThan700] = useMediaQuery("(min-width: 700px)");
 
-  return <>{isLargerThan800 ? <DesktopLayout /> : <MobileLayout />}</>;
+  return <>{isLargerThan700 ? <DesktopLayout /> : <MobileLayout />}</>;
 };

@@ -35,13 +35,16 @@ model Traject {
 }
 
 model BoatModel {
-  id        Int      @id @default(autoincrement())
-  name      String
-  maxSpeed  Float
-  maxFuel   Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Boat      Boat[]
+  id          Int      @id @default(autoincrement())
+  name        String
+  //En noeuds
+  maxSpeed    Float
+  //En litres
+  maxFuel     Float
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Boat        Boat[]
 }
 
 model Boat {
@@ -54,8 +57,8 @@ model Boat {
   Traject       Traject[]
   Fuel          Fuel[]
   Speed         Speed[]
-  User          User?       @relation(fields: [userId], references: [id])
-  userId        Int?
+  User          User        @relation(fields: [userId], references: [id])
+  userId        Int
   Coordinates   Coordinates @relation(fields: [coordinatesId], references: [id])
   coordinatesId Int         @unique
 }
