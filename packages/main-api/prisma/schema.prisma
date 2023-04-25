@@ -54,7 +54,6 @@ model Boat {
   boatModelId Int
   Traject     Traject[]
   Fuel        Fuel[]
-  fuelId      Int?
   User        User?         @relation(fields: [userId], references: [id])
   userId      Int?
   Coordinates Coordinates[]

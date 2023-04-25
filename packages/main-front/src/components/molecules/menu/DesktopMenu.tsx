@@ -5,7 +5,7 @@ export const DesktopMenu = () => {
   return (
     <Box position="sticky" top="0" as="nav">
       <Link to={"/"} as={RouteLink}>
-        <Icon />
+        <Icon boxSize="50px" />
       </Link>
       <Link to={"/new_traject"} as={RouteLink}>
         Nouveau trajet
