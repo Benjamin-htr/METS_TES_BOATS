@@ -5,4 +5,6 @@ export const createTrajectSchema = z.object({
   boatId: z.number(),
   longitudeDestination: z.number(),
   latitudeDestination: z.number(),
+  wind: z.number(),
+  wave: z.number()
 });

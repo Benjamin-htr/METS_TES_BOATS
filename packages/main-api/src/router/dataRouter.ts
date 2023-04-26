@@ -30,14 +30,14 @@ export const dataRouter = trpc.router({
   getBoat: trpc.procedure.input(getBoatSchema).query(({ input }) => {
     return prisma.boat.findUnique({
       where: {
-         id : input.boatId
+        id: input.boatId,
       },
     });
   }),
 
   //permet de créer un trajet
   createTraject: trpc.procedure.input(createTrajectSchema).mutation(({ input }) => {
-    const postCoordinates = prisma.traject.create({
+    const creationTraject = prisma.traject.create({
       data: {
         Destination: {
           create: {
@@ -55,15 +55,24 @@ export const dataRouter = trpc.router({
             id: input.boatId,
           },
         },
-        // Speed : ,
-        // Wave : ,
-        // Wind : ,
+        Wind: {
+          create: {
+            speed: 10,
+            direction: 2,
+          },
+        },
+        Wave: {
+          create: {
+            height: 0.5,
+            frequency: 5,
+          },
+        },
       },
     });
     return {
       status: "success",
       data: {
-        postCoordinates,
+        creationTraject,
       },
     };
   }),
