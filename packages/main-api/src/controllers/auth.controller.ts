@@ -133,3 +133,30 @@ export const logoutHandler = ({ ctx }: { ctx: Context }) => {
     throw new Error("Something went wrong");
   }
 };
+
+export const deleteAccountHandler = async ({ ctx }: { ctx: Context }) => {
+  try {
+    const userId = ctx.user?.id;
+    if (!userId) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "You must be logged in to delete your account",
+      });
+    }
+
+    await prisma.user.delete({
+      where: {
+        id: userId,
+      },
+    });
+
+    logout({ ctx });
+
+    return { status: "success" };
+  } catch (err) {
+    if (err instanceof Error) {
+      throw err;
+    }
+    throw new Error("Something went wrong");
+  }
+};
