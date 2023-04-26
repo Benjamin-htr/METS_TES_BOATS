@@ -1,7 +1,9 @@
+import { Flex, Heading } from "@chakra-ui/react";
+
 export const NotFound = () => {
   return (
-    <div>
-      <h1>Page not found</h1>
-    </div>
+    <Flex height={"100%"} align={"center"} justify={"center"}>
+      <Heading>404, Page not found</Heading>
+    </Flex>
   );
 };

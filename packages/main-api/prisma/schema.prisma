@@ -30,19 +30,21 @@ model Traject {
   userId        Int
   Boat          Boat        @relation(fields: [boatId], references: [id])
   boatId        Int
-  Speed         Speed[]
   Wave          Wave[]
   Wind          Wind[]
 }
 
 model BoatModel {
-  id        Int      @id @default(autoincrement())
-  name      String
-  maxSpeed  Float
-  maxFuel   Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Boat      Boat[]
+  id          Int      @id @default(autoincrement())
+  name        String
+  //En noeuds
+  maxSpeed    Float
+  //En litres
+  maxFuel     Float
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Boat        Boat[]
 }
 
 model Boat {
@@ -54,8 +56,9 @@ model Boat {
   boatModelId   Int
   Traject       Traject[]
   Fuel          Fuel[]
-  User          User?       @relation(fields: [userId], references: [id])
-  userId        Int?
+  Speed         Speed[]
+  User          User        @relation(fields: [userId], references: [id])
+  userId        Int
   Coordinates   Coordinates @relation(fields: [coordinatesId], references: [id])
   coordinatesId Int         @unique
 }
@@ -75,8 +78,8 @@ model Speed {
   speed     Float //en noeuds
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Traject   Traject  @relation(fields: [trajectId], references: [id])
-  trajectId Int
+  Boat      Boat?    @relation(fields: [boatId], references: [id])
+  boatId    Int?
 }
 
 model Wave {

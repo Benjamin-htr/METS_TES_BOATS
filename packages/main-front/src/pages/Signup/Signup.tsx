@@ -1,10 +1,11 @@
 import { Card, CardBody, CardFooter, CardHeader, Flex, Heading, Link, Text } from "@chakra-ui/react";
 import { Link as RouteLink } from "react-router-dom";
+import waveImage from "../../assets/Wave.svg";
 import { SignupForm } from "./SignupForm";
 
 export const Signup = () => {
   return (
-    <Flex height={"100%"} align={"center"} justify={"center"}>
+    <Flex height={"100%"} align={"center"} justify={"center"} backgroundImage={waveImage}>
       <Card align="center">
         <CardHeader>
           <Heading size="md">Inscription</Heading>
