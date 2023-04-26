@@ -5,7 +5,7 @@ import { SignupForm } from "./SignupForm";
 
 export const Signup = () => {
   return (
-    <Flex height={"100%"} align={"center"} justify={"center"} backgroundImage={waveImage}>
+    <Flex minH={"100vh"} align={"center"} justify={"center"} backgroundImage={waveImage}>
       <Card align="center">
         <CardHeader>
           <Heading size="md">Inscription</Heading>

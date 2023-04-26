@@ -5,7 +5,7 @@ import { LoginForm } from "./LoginForm";
 
 export const Login = () => {
   return (
-    <Flex height={"100%"} align={"center"} justify={"center"} backgroundImage={waveImage}>
+    <Flex minH={"100vh"} align={"center"} justify={"center"} backgroundImage={waveImage}>
       <Card align="center">
         <CardHeader>
           <Heading size="md">Connexion</Heading>
