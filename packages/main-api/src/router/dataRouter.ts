@@ -1,7 +1,7 @@
 // import { getMeHandler } from "../controllers/user.controller";
 import { trpc } from "../lib/trpc";
 // import { isAuthorizedProcedure } from "../middleware/isAuthorized";
-import { createCoordinatesSchema, createTrajectSchema } from "@pnpm-monorepo/schemas";
+import { createCoordinatesSchema, createTrajectSchema, getBoatSchema } from "@pnpm-monorepo/schemas";
 import { prisma } from "../lib/prismaClient";
 
 export const dataRouter = trpc.router({
@@ -16,7 +16,6 @@ export const dataRouter = trpc.router({
       data: {
         latitude: input.latitude,
         longitude: input.logitude,
-        boatId: input.boatId,
       },
     });
     return {
@@ -27,14 +26,40 @@ export const dataRouter = trpc.router({
     };
   }),
 
-  getBoat: trpc.procedure.query(({ ctx }) => {
-    console.log(ctx.user);
-    // const todos = await prisma.todo.findMany()
-    // return todos
-    return prisma.boat.findMany();
+  //retourne un boat en fonction de l'id
+  getBoat: trpc.procedure.input(getBoatSchema).query(({ input }) => {
+    return prisma.boat.findUnique({
+      where: {
+         id : input.boatId
+      },
+    });
   }),
-  postTraject: trpc.procedure.input(createTrajectSchema).mutation(({ input }) => {
-    const postCoordinates = prisma.traject.create({});
+
+  //permet de créer un trajet
+  createTraject: trpc.procedure.input(createTrajectSchema).mutation(({ input }) => {
+    const postCoordinates = prisma.traject.create({
+      data: {
+        Destination: {
+          create: {
+            latitude: input.latitudeDestination,
+            longitude: input.longitudeDestination,
+          },
+        },
+        User: {
+          connect: {
+            id: input.userId,
+          },
+        },
+        Boat: {
+          connect: {
+            id: input.boatId,
+          },
+        },
+        // Speed : ,
+        // Wave : ,
+        // Wind : ,
+      },
+    });
     return {
       status: "success",
       data: {
@@ -42,10 +67,11 @@ export const dataRouter = trpc.router({
       },
     };
   }),
-  //   getTraject: trpc.procedure.query(({ ctx }) => {
-  //     console.log(ctx.user);
-  //     // const todos = await prisma.todo.findMany()
-  //     // return todos
-  //     return prisma.traject.findMany(ctx.user);
-  //   }),
+  getTraject: trpc.procedure.query(({ ctx }) => {
+    return prisma.traject.findUnique({
+      where: {
+        id: ctx.user?.id,
+      },
+    });
+  }),
 });
