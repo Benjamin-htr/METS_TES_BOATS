@@ -26,9 +26,9 @@ model Traject {
   updatedAt     DateTime    @updatedAt
   Destination   Coordinates @relation(fields: [destinationId], references: [id])
   destinationId Int         @unique
-  User          User        @relation(fields: [userId], references: [id])
+  User          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        Int
-  Boat          Boat        @relation(fields: [boatId], references: [id])
+  Boat          Boat        @relation(fields: [boatId], references: [id], onDelete: Cascade)
   boatId        Int
   Wave          Wave[]
   Wind          Wind[]
@@ -57,7 +57,7 @@ model Boat {
   Traject       Traject[]
   Fuel          Fuel[]
   Speed         Speed[]
-  User          User        @relation(fields: [userId], references: [id])
+  User          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        Int
   Coordinates   Coordinates @relation(fields: [coordinatesId], references: [id])
   coordinatesId Int         @unique
@@ -69,7 +69,7 @@ model Fuel {
   remaining   Float
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  Boat        Boat     @relation(fields: [boatId], references: [id])
+  Boat        Boat     @relation(fields: [boatId], references: [id], onDelete: Cascade)
   boatId      Int
 }
 
@@ -78,7 +78,7 @@ model Speed {
   speed     Float //en noeuds
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Boat      Boat?    @relation(fields: [boatId], references: [id])
+  Boat      Boat?    @relation(fields: [boatId], references: [id], onDelete: Cascade)
   boatId    Int?
 }
 
@@ -88,7 +88,7 @@ model Wave {
   updatedAt DateTime @updatedAt
   height    Float //en mètres
   frequency Float //en hertz
-  Traject   Traject  @relation(fields: [trajectId], references: [id])
+  Traject   Traject  @relation(fields: [trajectId], references: [id], onDelete: Cascade)
   trajectId Int
 }
 
@@ -98,7 +98,7 @@ model Wind {
   updatedAt DateTime @updatedAt
   direction Float //en degrés
   speed     Float //en noeuds
-  Traject   Traject  @relation(fields: [trajectId], references: [id])
+  Traject   Traject  @relation(fields: [trajectId], references: [id], onDelete: Cascade)
   trajectId Int
 }
 

@@ -1,9 +1,11 @@
-import { Flex, IconButton } from "@chakra-ui/react";
+import { Button, Flex, IconButton } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { Fragment, useState } from "react";
+import { CgLogOut } from "react-icons/cg";
+import { useNavigate } from "react-router-dom";
 import steeringWheel from "../../../../assets/icons/steering-wheel.svg";
+import { trpc } from "../../../../lib/trpc";
 import { MenuNav } from "./MenuNav";
-import classes from "./mobileMenu.module.css";
 
 interface MobileMenuProps {
   closeOnClick?: boolean;
@@ -12,7 +14,14 @@ interface MobileMenuProps {
 export const MobileMenu = (props: MobileMenuProps) => {
   const buttonSize = 85;
   const backgroundSize = buttonSize - 10;
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+
+  const logoutMutation = trpc.auth.logoutUser.useMutation({
+    onSuccess: () => {
+      navigate("/login");
+    },
+  });
 
   const variants = {
     open: { width: "100%", height: "100%", opacity: 1, transition: { duration: 0.4 } },
@@ -24,6 +33,22 @@ export const MobileMenu = (props: MobileMenuProps) => {
     },
   };
 
+  const buttonAnim = {
+    open: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        y: { stiffness: 1000, velocity: -200 },
+      },
+    },
+    closed: {
+      x: 300,
+      opacity: 0,
+      transition: {
+        y: { stiffness: 1000 },
+      },
+    },
+  };
   const closeMenu = () => {
     if (props.closeOnClick) setIsOpen(false);
   };
@@ -44,11 +69,23 @@ export const MobileMenu = (props: MobileMenuProps) => {
         animate={isOpen ? "open" : "closed"}
         variants={variants}
       >
+        <Button
+          pos={"absolute"}
+          top={"10px"}
+          right={"10px"}
+          as={motion.button}
+          variants={buttonAnim}
+          colorScheme="orange"
+          leftIcon={<CgLogOut />}
+          onClick={() => logoutMutation.mutate()}
+          isLoading={logoutMutation.isLoading}
+        >
+          Déconnexion
+        </Button>
         <MenuNav isOpen={isOpen} closeMenu={closeMenu} />
       </Flex>
 
       <IconButton
-        className={classes.ToggleButton}
         icon={<img src={steeringWheel} />}
         aria-label={isOpen ? "Close menu" : "Open menu"}
         size={"lg"}

@@ -1,7 +1,12 @@
+import { useMediaQuery } from "@chakra-ui/react";
+import { DesktopProfile } from "./DekstopProfile";
+import { MobileProfile } from "./MobileProfile";
+
 export const Profile = () => {
-  return (
-    <div>
-      <h1>Profile</h1>
-    </div>
-  );
+  const [isLargerThan600] = useMediaQuery("(min-width: 600px)");
+
+  if (isLargerThan600) {
+    return <DesktopProfile />;
+  }
+  return <MobileProfile />;
 };
