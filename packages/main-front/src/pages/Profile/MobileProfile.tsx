@@ -1,10 +1,22 @@
-import { Avatar, Box, Button, Divider, Flex, Heading } from "@chakra-ui/react";
+import { Avatar, Box, Button, Divider, Flex, Heading, useDisclosure } from "@chakra-ui/react";
+import { useRef } from "react";
 import { CgLogOut } from "react-icons/cg";
 import { MdDelete } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import { trpc } from "../../lib/trpc";
+import { DeleteAccountAlert } from "./DeleteAccountAlert";
 
 export const MobileProfile = () => {
+  const navigate = useNavigate();
   const meQuery = trpc.user.getMe.useQuery();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef(null);
+
+  const logoutMutation = trpc.auth.logoutUser.useMutation({
+    onSuccess: () => {
+      navigate("/login");
+    },
+  });
 
   return (
     <Box h={"100vh"}>
@@ -24,15 +36,22 @@ export const MobileProfile = () => {
         />
       </Box>
       <Flex direction="column" mt={"40px"} align={"center"} padding={"0px 20px"} gap={"25px"}>
-        <Button colorScheme="orange" w={"80%"} leftIcon={<CgLogOut />}>
+        <Button
+          colorScheme="orange"
+          w={"80%"}
+          leftIcon={<CgLogOut />}
+          onClick={() => logoutMutation.mutate()}
+          isLoading={logoutMutation.isLoading}
+        >
           Déconnexion
         </Button>
         <Divider orientation="horizontal" colorScheme={"gray"} border={"white solid 1px"} />
-        <Button colorScheme="red" w={"80%"} leftIcon={<MdDelete />}>
+        <Button colorScheme="red" w={"80%"} leftIcon={<MdDelete />} onClick={onOpen}>
           Supprimer mon compte
         </Button>
         <Divider orientation="horizontal" colorScheme={"gray"} border={"white solid 1px"} />
       </Flex>
+      <DeleteAccountAlert isOpen={isOpen} onClose={onClose} leastDestructiveRef={cancelRef} />
     </Box>
   );
 };
