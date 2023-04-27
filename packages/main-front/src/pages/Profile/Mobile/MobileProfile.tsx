@@ -3,8 +3,8 @@ import { useRef } from "react";
 import { CgLogOut } from "react-icons/cg";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { trpc } from "../../lib/trpc";
-import { DeleteAccountAlert } from "./DeleteAccountAlert";
+import { trpc } from "../../../lib/trpc";
+import { DeleteAccountAlert } from "../DeleteAccountAlert";
 
 export const MobileProfile = () => {
   const navigate = useNavigate();

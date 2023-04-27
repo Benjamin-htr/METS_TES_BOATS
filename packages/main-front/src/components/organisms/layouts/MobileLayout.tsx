@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
-import { MobileMenu } from "../../molecules/menu/MobileMenu/MobileMenu";
+import { MobileNavBar } from "../../molecules/NavBar/MobileNavBar/MobileNavBar";
 
 export const MobileLayout = () => {
   return (
     <>
       <Outlet />
-      <MobileMenu closeOnClick />
+      <MobileNavBar closeOnClick />
     </>
   );
 };

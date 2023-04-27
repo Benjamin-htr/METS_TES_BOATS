@@ -2,10 +2,10 @@ import { Card, Divider, Flex, IconButton, Image, Link, Text } from "@chakra-ui/r
 import { CgLogOut } from "react-icons/cg";
 import { Link as RouteLink, useNavigate } from "react-router-dom";
 import { trpc } from "../../../../lib/trpc";
-import { DesktopMenuLink } from "./DesktopMenuLink";
+import { DesktopNavLink } from "./DesktopNavLink";
 import logo from "/app_icon.png";
 
-export const DesktopMenu = () => {
+export const DesktopNavBar = () => {
   const navigate = useNavigate();
 
   const logoutMutation = trpc.auth.logoutUser.useMutation({
@@ -35,9 +35,9 @@ export const DesktopMenu = () => {
           </Flex>
         </Link>
         <Divider orientation="vertical" height={"70%"} m={"0 10px"} />
-        <DesktopMenuLink to={"/new_traject"}>Nouveau trajet</DesktopMenuLink>
-        <DesktopMenuLink to={"/history"}>Historique</DesktopMenuLink>
-        <DesktopMenuLink to={"/profile"}>Profil</DesktopMenuLink>
+        <DesktopNavLink to={"/new_traject"}>Nouveau trajet</DesktopNavLink>
+        <DesktopNavLink to={"/history"}>Historique</DesktopNavLink>
+        <DesktopNavLink to={"/profile"}>Profil</DesktopNavLink>
         <Divider orientation="vertical" height={"70%"} m={"0 10px"} />
         <IconButton
           icon={<CgLogOut />}

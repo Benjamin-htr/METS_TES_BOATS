@@ -7,7 +7,7 @@ interface DesktopMenuLinkProps {
   children: React.ReactNode;
 }
 
-export const DesktopMenuLink = (props: DesktopMenuLinkProps) => {
+export const DesktopNavLink = (props: DesktopMenuLinkProps) => {
   const isMatch = useMatch(props.to.toString());
 
   return (
@@ -25,7 +25,7 @@ export const DesktopMenuLink = (props: DesktopMenuLinkProps) => {
       {isMatch && (
         <Box
           height={"5px"}
-          bg="#AF5D63"
+          bg="#003249"
           as={motion.div}
           layoutId="underline"
           pos={"absolute"}

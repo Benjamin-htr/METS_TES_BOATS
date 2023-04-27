@@ -11,7 +11,7 @@ interface MobileMenuProps {
   closeOnClick?: boolean;
 }
 
-export const MobileMenu = (props: MobileMenuProps) => {
+export const MobileNavBar = (props: MobileMenuProps) => {
   const buttonSize = 85;
   const backgroundSize = buttonSize - 10;
   const navigate = useNavigate();

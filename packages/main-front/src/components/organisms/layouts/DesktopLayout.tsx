@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
-import { DesktopMenu } from "../../molecules/menu/DesktopMenu/DesktopMenu";
+import { DesktopNavBar } from "../../molecules/NavBar/DesktopNavBar/DesktopNavBar";
 
 export const DesktopLayout = () => {
   return (
     <>
-      <DesktopMenu />
+      <DesktopNavBar />
       <Outlet />
     </>
   );
