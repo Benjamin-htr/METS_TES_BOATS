@@ -6,7 +6,7 @@ export const getBoatSchema = z.object({
 
 export const createBoatSchema = z.object({
   name: z.string(),
-  boatModelId: z.number(),
+  boatModelId: z.string(),
 });
 
 export const updateBoatPosition = z.object({

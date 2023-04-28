@@ -39,7 +39,7 @@ export const boatRouter = trpc.router({
         name: input.name,
         BoatModel: {
           connect: {
-            id: input.boatModelId,
+            id: parseInt(input.boatModelId),
           },
         },
         User: {

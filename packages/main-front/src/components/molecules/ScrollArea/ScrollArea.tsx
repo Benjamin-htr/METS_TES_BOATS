@@ -35,13 +35,13 @@ export const ScrollArea = (props: ScrollAreaProps) => {
   const shadowColor = props.shadowColor ? props.shadowColor : "rgba(255, 255, 255, 1)";
 
   useMotionValueEvent(scrollYProgress, "change", (test) => {
-    if (test >= 1) {
+    if (test >= 0.99) {
       setBottomReached(true);
     }
-    if (test <= 0) {
+    if (test <= 0.01) {
       setTopReached(true);
     }
-    if (test > 0 && test < 1) {
+    if (test > 0.01 && test < 0.99) {
       setTopReached(false);
       setBottomReached(false);
     }

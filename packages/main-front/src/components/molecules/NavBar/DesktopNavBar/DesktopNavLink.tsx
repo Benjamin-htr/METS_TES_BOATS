@@ -8,7 +8,7 @@ interface DesktopMenuLinkProps {
 }
 
 export const DesktopNavLink = (props: DesktopMenuLinkProps) => {
-  const isMatch = useMatch(props.to.toString());
+  const isMatch = useMatch(typeof props.to === "string" ? props.to : "");
 
   return (
     <Flex

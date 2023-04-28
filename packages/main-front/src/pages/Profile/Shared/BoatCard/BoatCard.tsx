@@ -12,8 +12,8 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useRef } from "react";
-import { RouterOutput } from "../../../lib/trpc";
-import { GetElementType } from "../../../utils/utilityType";
+import { RouterOutput } from "../../../../lib/trpc";
+import { GetElementType } from "../../../../utils/utilityType";
 import { BoatDeleteAlert } from "./BoatDeleteAlert";
 
 interface BoatCardProps {

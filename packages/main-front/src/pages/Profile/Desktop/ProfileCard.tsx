@@ -19,7 +19,7 @@ import { CgLogOut } from "react-icons/cg";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { trpc } from "../../../lib/trpc";
-import { DeleteAccountAlert } from "../DeleteAccountAlert";
+import { DeleteAccountAlert } from "../Shared/DeleteAccountAlert";
 
 export const ProfileCard = forwardRef<HTMLDivElement, CardProps>((props, ref) => {
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ export const ProfileCard = forwardRef<HTMLDivElement, CardProps>((props, ref) =>
           <Heading size="md">Profil</Heading>
           <Flex justify={"space-between"} mt={"15px"} gap={"15px"} wrap={"wrap"}>
             <Avatar size={"2xl"} />
-            <Flex direction="column" justifyContent={"space-around"}>
+            <Flex direction="column" justifyContent={"space-around"} gap="10px">
               <Button
                 colorScheme="orange"
                 leftIcon={<CgLogOut />}
@@ -73,7 +73,7 @@ export const ProfileCard = forwardRef<HTMLDivElement, CardProps>((props, ref) =>
                 {meQuery.data?.data.user?.createdAt && (
                   <Flex gap={"10px"} mt={"8px"}>
                     <Text fontWeight="500">Date de création : </Text>
-                    <Text>{new Date(meQuery.data?.data.user?.createdAt).toLocaleDateString("fr-FR")}</Text>
+                    <Text>{new Date(meQuery.data.data.user.createdAt).toLocaleDateString("fr-FR")}</Text>
                   </Flex>
                 )}
               </Box>

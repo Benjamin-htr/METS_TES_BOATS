@@ -1,1 +1,1 @@
-export type GetElementType<T extends any[] | undefined> = T extends (infer U)[] ? U : never;
+export type GetElementType<T extends unknown[] | undefined> = T extends (infer U)[] ? U : never;

@@ -1,6 +1,6 @@
 import { Spinner, Stack } from "@chakra-ui/react";
-import { trpc } from "../../lib/trpc";
-import { BoatCard } from "./BoatCard/BoatCard";
+import { trpc } from "../../../../lib/trpc";
+import { BoatCard } from "../BoatCard/BoatCard";
 
 export const BoatsList = () => {
   const boatsQuery = trpc.boat.getAll.useQuery();
