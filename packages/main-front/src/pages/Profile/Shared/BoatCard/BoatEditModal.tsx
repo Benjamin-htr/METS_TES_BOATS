@@ -37,7 +37,6 @@ export const BoatEditModal = (props: BoatEditModalProps) => {
     register,
     handleSubmit,
     formState: { errors },
-    control,
   } = useForm<editBoatSchemaType>({ resolver: zodResolver(editBoatSchema), defaultValues: { name: props.boat.name } });
 
   const editBoatMutation = trpc.boat.edit.useMutation({
