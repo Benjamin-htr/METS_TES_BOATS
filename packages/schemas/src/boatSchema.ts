@@ -9,6 +9,11 @@ export const createBoatSchema = z.object({
   boatModelId: z.string(),
 });
 
+export const editBoatSchema = z.object({
+  boatId: z.number(),
+  name: z.string(),
+});
+
 export const updateBoatPosition = z.object({
   boatId: z.number(),
   longitude: z.number(),

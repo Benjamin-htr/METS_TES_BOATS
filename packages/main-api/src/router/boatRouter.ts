@@ -1,5 +1,5 @@
 // import { getMeHandler } from "../controllers/user.controller";
-import { createBoatSchema, getBoatSchema } from "@pnpm-monorepo/schemas";
+import { createBoatSchema, editBoatSchema, getBoatSchema } from "@pnpm-monorepo/schemas";
 import { prisma } from "../lib/prismaClient";
 import { trpc } from "../lib/trpc";
 import { isAuthorizedProcedure } from "../middleware/isAuthorized";
@@ -53,6 +53,17 @@ export const boatRouter = trpc.router({
             longitude: defaultBoat.longitude,
           },
         },
+      },
+    });
+  }),
+
+  edit: isAuthorizedProcedure.input(editBoatSchema).mutation(({ input }) => {
+    return prisma.boat.update({
+      where: {
+        id: input.boatId,
+      },
+      data: {
+        name: input.name,
       },
     });
   }),

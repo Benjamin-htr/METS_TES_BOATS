@@ -15,13 +15,16 @@ import { useRef } from "react";
 import { RouterOutput } from "../../../../lib/trpc";
 import { GetElementType } from "../../../../utils/utilityType";
 import { BoatDeleteAlert } from "./BoatDeleteAlert";
+import { BoatEditModal } from "./BoatEditModal";
 
 interface BoatCardProps {
   boat: GetElementType<RouterOutput["boat"]["getAll"]>;
 }
 
 export const BoatCard = (props: BoatCardProps) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: deleteIsOpen, onOpen: deleteOnOpen, onClose: deleteOnClose } = useDisclosure();
+  const { isOpen: editIsOpen, onOpen: editOnOpen, onClose: editOnClose } = useDisclosure();
+
   const cancelRef = useRef(null);
 
   return (
@@ -74,16 +77,22 @@ export const BoatCard = (props: BoatCardProps) => {
         <Divider />
         <CardFooter>
           <ButtonGroup spacing="2">
-            <Button variant="solid" colorScheme="blue">
+            <Button variant="solid" colorScheme="blue" onClick={editOnOpen}>
               Modifier
             </Button>
-            <Button variant="outline" colorScheme="red" onClick={onOpen}>
+            <Button variant="outline" colorScheme="red" onClick={deleteOnOpen}>
               Supprimer
             </Button>
           </ButtonGroup>
         </CardFooter>
       </Card>
-      <BoatDeleteAlert isOpen={isOpen} onClose={onClose} leastDestructiveRef={cancelRef} boatId={props.boat.id} />
+      <BoatDeleteAlert
+        isOpen={deleteIsOpen}
+        onClose={deleteOnClose}
+        leastDestructiveRef={cancelRef}
+        boatId={props.boat.id}
+      />
+      <BoatEditModal isOpen={editIsOpen} onClose={editOnClose} boat={props.boat} />
     </>
   );
 };
