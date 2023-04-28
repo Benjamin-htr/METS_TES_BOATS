@@ -6,6 +6,7 @@ import { CookieOptions } from "express";
 import { z } from "zod";
 import { prisma } from "../lib/prismaClient";
 import { Context } from "../lib/trpc";
+import { excludeField } from "../utils/excludeField";
 import { signJwt } from "../utils/jwt";
 
 const accessTokenExpiresIn = 60;
@@ -49,10 +50,12 @@ export const registerHandler = async ({ input }: { input: z.infer<typeof createU
       },
     });
 
+    const userWithoutPassword = excludeField(user, ["password"]);
+
     return {
       status: "success",
       data: {
-        user,
+        user: userWithoutPassword,
       },
     };
   } catch (err) {
@@ -85,7 +88,7 @@ export const loginHandler = async ({ input, ctx }: { input: z.infer<typeof login
       });
     }
 
-    // Create the Access and refresh Tokens
+    // Create the Access token
     const access_token = signJwt(
       { sub: user.id },
       {

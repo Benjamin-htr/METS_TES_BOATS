@@ -1,7 +1,7 @@
 // import { getMeHandler } from "../controllers/user.controller";
 import { trpc } from "../lib/trpc";
 // import { isAuthorizedProcedure } from "../middleware/isAuthorized";
-import { getBoatSchema, updateBoatPosition } from "@pnpm-monorepo/schemas";
+import { getBoatSchema } from "@pnpm-monorepo/schemas";
 import { prisma } from "../lib/prismaClient";
 
 export const boatRouter = trpc.router({
@@ -10,6 +10,14 @@ export const boatRouter = trpc.router({
     return prisma.boat.findUnique({
       where: {
         id: input.boatId,
+      },
+    });
+  }),
+
+  getAllBoats: trpc.procedure.query(({ ctx }) => {
+    return prisma.boat.findMany({
+      where: {
+        userId: ctx.user?.id,
       },
     });
   }),
