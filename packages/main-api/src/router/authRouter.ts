@@ -3,8 +3,8 @@ import { deleteAccountHandler, loginHandler, logoutHandler, registerHandler } fr
 import { trpc } from "../lib/trpc";
 
 export const authRouter = trpc.router({
-  registerUser: trpc.procedure.input(createUserSchema).mutation(({ input }) => registerHandler({ input })),
-  loginUser: trpc.procedure.input(loginUserSchema).mutation(({ input, ctx }) => loginHandler({ input, ctx })),
-  logoutUser: trpc.procedure.mutation(({ ctx }) => logoutHandler({ ctx })),
-  deleteUser: trpc.procedure.mutation(({ ctx }) => deleteAccountHandler({ ctx })),
+  register: trpc.procedure.input(createUserSchema).mutation(({ input }) => registerHandler({ input })),
+  login: trpc.procedure.input(loginUserSchema).mutation(({ input, ctx }) => loginHandler({ input, ctx })),
+  logout: trpc.procedure.mutation(({ ctx }) => logoutHandler({ ctx })),
+  delete: trpc.procedure.mutation(({ ctx }) => deleteAccountHandler({ ctx })),
 });

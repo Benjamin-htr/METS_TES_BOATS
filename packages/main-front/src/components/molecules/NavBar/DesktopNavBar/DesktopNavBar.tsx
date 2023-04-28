@@ -8,7 +8,7 @@ import logo from "/app_icon.png";
 export const DesktopNavBar = () => {
   const navigate = useNavigate();
 
-  const logoutMutation = trpc.auth.logoutUser.useMutation({
+  const logoutMutation = trpc.auth.logout.useMutation({
     onSuccess: () => {
       navigate("/login");
     },

@@ -12,7 +12,7 @@ export const MobileProfile = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef(null);
 
-  const logoutMutation = trpc.auth.logoutUser.useMutation({
+  const logoutMutation = trpc.auth.logout.useMutation({
     onSuccess: () => {
       navigate("/login");
     },

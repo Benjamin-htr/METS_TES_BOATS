@@ -6,6 +6,7 @@ import { CookieOptions } from "express";
 import { z } from "zod";
 import { prisma } from "../lib/prismaClient";
 import { Context } from "../lib/trpc";
+import { createDefaultBoat } from "../services/boat.service";
 import { excludeField } from "../utils/excludeField";
 import { signJwt } from "../utils/jwt";
 
@@ -30,25 +31,11 @@ export const registerHandler = async ({ input }: { input: z.infer<typeof createU
       data: {
         username: input.username,
         password: hashedPassword,
-        //On crée un bateau par défaut pour chaque utilisateur :
-        Boat: {
-          create: {
-            name: "Esperance",
-            BoatModel: {
-              connect: {
-                id: 4,
-              },
-            },
-            Coordinates: {
-              create: {
-                latitude: 23,
-                longitude: -173,
-              },
-            },
-          },
-        },
       },
     });
+
+    //On crée un bateau par défaut pour chaque utilisateur :
+    await createDefaultBoat(user.id);
 
     const userWithoutPassword = excludeField(user, ["password"]);
 

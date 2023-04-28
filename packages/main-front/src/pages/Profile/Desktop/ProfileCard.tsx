@@ -27,7 +27,7 @@ export const ProfileCard = forwardRef<HTMLDivElement, CardProps>((props, ref) =>
   const cancelRef = useRef(null);
   const meQuery = trpc.user.getMe.useQuery();
 
-  const logoutMutation = trpc.auth.logoutUser.useMutation({
+  const logoutMutation = trpc.auth.logout.useMutation({
     onSuccess: () => {
       navigate("/login");
     },
@@ -38,7 +38,7 @@ export const ProfileCard = forwardRef<HTMLDivElement, CardProps>((props, ref) =>
       <Card {...props} ref={ref}>
         <CardHeader>
           <Heading size="md">Profil</Heading>
-          <Flex justify={"space-between"} mt={"15px"} gap={"15px"}>
+          <Flex justify={"space-between"} mt={"15px"} gap={"15px"} wrap={"wrap"}>
             <Avatar size={"2xl"} />
             <Flex direction="column" justifyContent={"space-around"}>
               <Button

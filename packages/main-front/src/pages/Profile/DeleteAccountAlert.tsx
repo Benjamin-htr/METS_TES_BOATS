@@ -20,7 +20,7 @@ export const DeleteAccountAlert = (props: DeleteAccountAlertProps) => {
   const { confirmFunction, ...rest } = props;
 
   const navigate = useNavigate();
-  const deleteAccountMutation = trpc.auth.deleteUser.useMutation({
+  const deleteAccountMutation = trpc.auth.delete.useMutation({
     onSuccess: () => {
       navigate("/signup");
     },

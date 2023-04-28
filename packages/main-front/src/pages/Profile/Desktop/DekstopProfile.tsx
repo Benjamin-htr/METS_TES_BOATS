@@ -6,7 +6,7 @@ export const DesktopProfile = () => {
   return (
     <Flex flexGrow={1} p={"20px"} gap={"10px"}>
       <ProfileCard />
-      <MyBoatsCard flexGrow={1} />
+      <MyBoatsCard flexGrow={1} flexBasis={"350px"} />
     </Flex>
   );
 };

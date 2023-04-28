@@ -20,7 +20,7 @@ export const LoginForm = () => {
     formState: { errors },
   } = useForm<LoginSchemaType>({ resolver: zodResolver(loginUserSchema) });
 
-  const loginMutation = trpc.auth.loginUser.useMutation({
+  const loginMutation = trpc.auth.login.useMutation({
     onSuccess: (data) => {
       navigate("/");
     },
