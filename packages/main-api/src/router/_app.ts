@@ -1,15 +1,16 @@
 import { trpc } from "../lib/trpc";
 import { authRouter } from "./authRouter";
-import { dataRouter } from "./dataRouter";
+import { boatRouter } from "./boatRouter";
+import { modelBoatRouter } from "./modelBoatRouter";
+import { trajectRouter } from "./trajectRouter";
 import { userRouter } from "./userRouter";
 
 export const appRouter = trpc.router({
-  user: userRouter,
   auth: authRouter,
-  data: dataRouter,
-  hello: trpc.procedure.query(() => {
-    return "Hello World";
-  }),
+  user: userRouter,
+  boat: boatRouter,
+  modelBoat: modelBoatRouter,
+  traject: trajectRouter,
 });
 
 export type AppRouter = typeof appRouter;

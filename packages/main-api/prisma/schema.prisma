@@ -21,17 +21,18 @@ model User {
 }
 
 model Traject {
-  id            Int         @id @default(autoincrement())
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  Destination   Coordinates @relation(fields: [destinationId], references: [id])
-  destinationId Int         @unique
-  User          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId        Int
-  Boat          Boat        @relation(fields: [boatId], references: [id], onDelete: Cascade)
-  boatId        Int
-  Wave          Wave[]
-  Wind          Wind[]
+  id           Int       @id @default(autoincrement())
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  finishedDate DateTime?
+  User         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       Int
+  Boat         Boat      @relation(fields: [boatId], references: [id], onDelete: Cascade)
+  boatId       Int
+  Wave         Wave[]
+  Wind         Wind[]
+  latitude     Float
+  longitude    Float
 }
 
 model BoatModel {
@@ -42,25 +43,27 @@ model BoatModel {
   //En litres
   maxFuel     Float
   description String?
+  imageUrl    String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   Boat        Boat[]
 }
 
 model Boat {
-  id            Int         @id @default(autoincrement())
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  name          String
-  BoatModel     BoatModel   @relation(fields: [boatModelId], references: [id])
-  boatModelId   Int
-  Traject       Traject[]
-  Fuel          Fuel[]
-  Speed         Speed[]
-  User          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId        Int
-  Coordinates   Coordinates @relation(fields: [coordinatesId], references: [id])
-  coordinatesId Int         @unique
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  name        String
+  BoatModel   BoatModel @relation(fields: [boatModelId], references: [id])
+  boatModelId Int
+  Traject     Traject[]
+  Fuel        Fuel[]
+  Speed       Speed[]
+  User        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int
+  isAvailable Boolean   @default(true)
+  latitude    Float
+  longitude   Float
 }
 
 model Fuel {
@@ -100,14 +103,4 @@ model Wind {
   speed     Float //en noeuds
   Traject   Traject  @relation(fields: [trajectId], references: [id], onDelete: Cascade)
   trajectId Int
-}
-
-model Coordinates {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  latitude  Float
-  longitude Float
-  Boat      Boat?
-  Traject   Traject?
 }

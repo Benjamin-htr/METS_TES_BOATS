@@ -17,7 +17,7 @@ export const SignupForm = () => {
 
   const toast = useToast();
 
-  const signupMutation = trpc.auth.registerUser.useMutation({
+  const signupMutation = trpc.auth.register.useMutation({
     onSuccess: () => {
       toast({
         title: "Inscription réussie",

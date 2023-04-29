@@ -17,7 +17,7 @@ export const MobileNavBar = (props: MobileMenuProps) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
-  const logoutMutation = trpc.auth.logoutUser.useMutation({
+  const logoutMutation = trpc.auth.logout.useMutation({
     onSuccess: () => {
       navigate("/login");
     },
