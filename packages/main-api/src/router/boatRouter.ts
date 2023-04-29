@@ -6,7 +6,6 @@ import { createBoatSchema, editBoatSchema, getBoatSchema } from "@pnpm-monorepo/
 import { prisma } from "../lib/prismaClient";
 import { trpc } from "../lib/trpc";
 import { isAuthorizedProcedure } from "../middleware/isAuthorized";
-import { defaultBoat } from "../services/boat.service";
 
 export function sum(a: number, b: number): number {
   return a + b;
@@ -28,6 +27,7 @@ export const boatRouter = trpc.router({
       },
       include: {
         BoatModel: true,
+        Traject: true,
       },
     });
   }),
@@ -44,8 +44,9 @@ export const boatRouter = trpc.router({
     return prisma.boat.create({
       data: {
         name: input.name,
-        latitude: defaultBoat.latitude,
-        longitude: defaultBoat.longitude,
+        latitude: 23,
+        longitude: -173,
+
         BoatModel: {
           connect: {
             id: parseInt(input.boatModelId),

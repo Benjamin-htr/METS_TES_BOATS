@@ -1,6 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import { LatLng, LeafletMouseEvent } from "leaflet";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
+import { CameraMap } from "./CameraMap";
 import { DestinationMarker } from "./DestinationMarker";
 import { boatMapIcon } from "./boatMapIcon";
 
@@ -32,7 +33,9 @@ export const Map = (props: MapProps) => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+
       <Marker position={props.boatPosition} icon={boatMapIcon} />
+      <CameraMap position={props.boatPosition} />
       <DestinationMarker onClick={props.onDestinationPositionChange} />
     </Box>
   );
