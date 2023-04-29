@@ -1,10 +1,8 @@
 // import { getMeHandler } from "../controllers/user.controller";
 import { trpc } from "../lib/trpc";
 // import { isAuthorizedProcedure } from "../middleware/isAuthorized";
-import { getBoatSchema, updateBoatPosition, getAllBoatFromUser } from "@pnpm-monorepo/schemas";
 import { createBoatSchema, editBoatSchema, getBoatSchema } from "@pnpm-monorepo/schemas";
 import { prisma } from "../lib/prismaClient";
-import { trpc } from "../lib/trpc";
 import { isAuthorizedProcedure } from "../middleware/isAuthorized";
 
 export function sum(a: number, b: number): number {

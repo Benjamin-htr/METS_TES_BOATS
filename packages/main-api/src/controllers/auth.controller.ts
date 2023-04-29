@@ -83,6 +83,13 @@ export const loginHandler = async ({ input, ctx }: { input: z.infer<typeof login
       }
     );
 
+    if (!ctx.res || !ctx.req) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "No response or request",
+      });
+    }
+
     // Send Access Token in Cookie
     ctx.res.cookie("access_token", access_token, accessTokenCookieOptions);
 
@@ -106,6 +113,13 @@ export const loginHandler = async ({ input, ctx }: { input: z.infer<typeof login
 };
 
 const logout = ({ ctx }: { ctx: Context }) => {
+  if (!ctx.res || !ctx.req) {
+    throw new TRPCError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "No response or request",
+    });
+  }
+
   ctx.res.cookie("access_token", "", { maxAge: -1 });
   ctx.res.cookie("logged_in", "", {
     maxAge: -1,

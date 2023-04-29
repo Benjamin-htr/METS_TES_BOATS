@@ -1,5 +1,4 @@
-import { describe, expect, test } from "@jest/globals";
-import { sum } from "./boatRouter";
+import { sum } from "../boatRouter";
 
 describe("sum module", () => {
   test("adds 1 + 2 to equal 3", () => {

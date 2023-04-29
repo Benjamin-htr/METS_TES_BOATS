@@ -33,7 +33,7 @@ export const BoatCard = (props: BoatCardProps) => {
       <Card>
         <CardBody>
           <Image
-            src={props.boat.BoatModel.imageUrl || ""}
+            src={props.boat.BoatModel.imageUrl ?? ""}
             alt={`${props.boat.BoatModel.name} accosté au port`}
             borderRadius="lg"
           />
@@ -74,7 +74,7 @@ export const BoatCard = (props: BoatCardProps) => {
                 0 kms
               </Text>
               <Text color="blue.600" fontSize="2xl">
-                {props.boat.isAvailable ? "À quai" : "En mer"}
+                {props.boat.Traject.find((t) => t.finishedDate === null) === undefined ? "À quai" : "En mer"}
               </Text>
             </Flex>
           </Stack>
