@@ -2,6 +2,7 @@ import { trpc } from "../lib/trpc";
 import { authRouter } from "./authRouter";
 import { boatRouter } from "./boatRouter";
 import { modelBoatRouter } from "./modelBoatRouter";
+import { trajectRouter } from "./trajectRouter";
 import { userRouter } from "./userRouter";
 
 export const appRouter = trpc.router({
@@ -9,6 +10,7 @@ export const appRouter = trpc.router({
   user: userRouter,
   boat: boatRouter,
   modelBoat: modelBoatRouter,
+  traject: trajectRouter,
 });
 
 export type AppRouter = typeof appRouter;

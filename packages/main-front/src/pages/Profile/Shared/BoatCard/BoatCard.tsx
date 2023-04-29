@@ -5,6 +5,7 @@ import {
   CardBody,
   CardFooter,
   Divider,
+  Flex,
   Heading,
   Image,
   Stack,
@@ -68,10 +69,14 @@ export const BoatCard = (props: BoatCardProps) => {
               </Text>
               {new Date(props.boat.createdAt).toLocaleDateString("fr-FR")}
             </Text>
-
-            <Text color="blue.600" fontSize="2xl">
-              0 kms
-            </Text>
+            <Flex justifyContent={"space-between"}>
+              <Text color="blue.600" fontSize="2xl">
+                0 kms
+              </Text>
+              <Text color="blue.600" fontSize="2xl">
+                {props.boat.isAvailable ? "À quai" : "En mer"}
+              </Text>
+            </Flex>
           </Stack>
         </CardBody>
         <Divider />

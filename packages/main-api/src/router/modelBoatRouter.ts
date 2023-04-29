@@ -1,4 +1,3 @@
-// import { getMeHandler } from "../controllers/user.controller";
 import { prisma } from "../lib/prismaClient";
 import { trpc } from "../lib/trpc";
 import { isAuthorizedProcedure } from "../middleware/isAuthorized";

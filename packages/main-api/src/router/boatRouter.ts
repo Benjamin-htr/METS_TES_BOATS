@@ -1,4 +1,3 @@
-// import { getMeHandler } from "../controllers/user.controller";
 import { createBoatSchema, editBoatSchema, getBoatSchema } from "@pnpm-monorepo/schemas";
 import { prisma } from "../lib/prismaClient";
 import { trpc } from "../lib/trpc";

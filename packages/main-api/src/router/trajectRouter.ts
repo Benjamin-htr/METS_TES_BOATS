@@ -1,19 +1,18 @@
-// import { getMeHandler } from "../controllers/user.controller";
-import { trpc } from "../lib/trpc";
-// import { isAuthorizedProcedure } from "../middleware/isAuthorized";
 import { createTrajectSchema } from "@pnpm-monorepo/schemas";
 import { prisma } from "../lib/prismaClient";
+import { trpc } from "../lib/trpc";
+import { isAuthorizedProcedure } from "../middleware/isAuthorized";
 
 export const trajectRouter = trpc.router({
   //permet de créer un trajet
-  createTraject: trpc.procedure.input(createTrajectSchema).mutation(({ input }) => {
-    const creationTraject = prisma.traject.create({
+  create: isAuthorizedProcedure.input(createTrajectSchema).mutation(({ input, ctx }) => {
+    const traject = prisma.traject.create({
       data: {
         latitude: input.latitudeDestination,
         longitude: input.longitudeDestination,
         User: {
           connect: {
-            id: input.userId,
+            id: ctx.user?.id,
           },
         },
         Boat: {
@@ -38,14 +37,19 @@ export const trajectRouter = trpc.router({
     return {
       status: "success",
       data: {
-        creationTraject,
+        traject,
       },
     };
   }),
-  getTraject: trpc.procedure.query(({ ctx }) => {
-    return prisma.traject.findUnique({
+  getAll: isAuthorizedProcedure.query(({ ctx }) => {
+    return prisma.traject.findMany({
       where: {
-        id: ctx.user?.id,
+        userId: ctx.user?.id,
+      },
+      include: {
+        Boat: true,
+        Wind: true,
+        Wave: true,
       },
     });
   }),
