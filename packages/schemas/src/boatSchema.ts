@@ -9,3 +9,7 @@ export const updateBoatPosition = z.object({
   longitude: z.number(),
   latitude: z.number(),
 });
+
+export const getAllBoatFromUser = z.object({
+  userId: z.number(),
+});
