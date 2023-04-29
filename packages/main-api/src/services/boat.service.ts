@@ -11,6 +11,8 @@ export const createDefaultBoat = async (userId: number) => {
   return await prisma.boat.create({
     data: {
       name: defaultBoat.name,
+      latitude: defaultBoat.latitude,
+      longitude: defaultBoat.longitude,
       BoatModel: {
         connect: {
           id: defaultBoat.boatModelId,
@@ -19,12 +21,6 @@ export const createDefaultBoat = async (userId: number) => {
       User: {
         connect: {
           id: userId,
-        },
-      },
-      Coordinates: {
-        create: {
-          latitude: defaultBoat.latitude,
-          longitude: defaultBoat.longitude,
         },
       },
     },

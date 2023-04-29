@@ -37,6 +37,8 @@ export const boatRouter = trpc.router({
     return prisma.boat.create({
       data: {
         name: input.name,
+        latitude: defaultBoat.latitude,
+        longitude: defaultBoat.longitude,
         BoatModel: {
           connect: {
             id: parseInt(input.boatModelId),
@@ -45,12 +47,6 @@ export const boatRouter = trpc.router({
         User: {
           connect: {
             id: ctx.user?.id,
-          },
-        },
-        Coordinates: {
-          create: {
-            latitude: defaultBoat.latitude,
-            longitude: defaultBoat.longitude,
           },
         },
       },

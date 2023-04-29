@@ -9,12 +9,8 @@ export const trajectRouter = trpc.router({
   createTraject: trpc.procedure.input(createTrajectSchema).mutation(({ input }) => {
     const creationTraject = prisma.traject.create({
       data: {
-        Destination: {
-          create: {
-            latitude: input.latitudeDestination,
-            longitude: input.longitudeDestination,
-          },
-        },
+        latitude: input.latitudeDestination,
+        longitude: input.longitudeDestination,
         User: {
           connect: {
             id: input.userId,
