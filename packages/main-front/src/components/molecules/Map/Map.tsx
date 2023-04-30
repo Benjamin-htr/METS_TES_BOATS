@@ -9,12 +9,14 @@ interface MapProps {
   boatPosition: LatLng;
   cameraPosition: LatLng;
   allowedControl: boolean;
-  onDestinationPositionChange: (e?: LeafletMouseEvent) => void;
+  destinationPosition?: LatLng;
+  onDestinationPositionChange?: (e?: LeafletMouseEvent) => void;
 }
 
 export const Map = (props: MapProps) => {
   return (
     <Box
+      zIndex={1}
       flexGrow={1}
       as={MapContainer}
       center={props.cameraPosition}
@@ -36,7 +38,7 @@ export const Map = (props: MapProps) => {
 
       <Marker position={props.boatPosition} icon={boatMapIcon} />
       <CameraMap position={props.boatPosition} />
-      <DestinationMarker onClick={props.onDestinationPositionChange} />
+      <DestinationMarker onClick={props.onDestinationPositionChange} position={props.destinationPosition} />
     </Box>
   );
 };

@@ -85,7 +85,13 @@ export const trajectRouter = trpc.router({
         id: input.trajectId,
       },
       include: {
-        Boat: true,
+        Boat: {
+          include: {
+            Fuel: true,
+            Speed: true,
+            BoatModel: true,
+          },
+        },
         Wind: true,
         Wave: true,
       },

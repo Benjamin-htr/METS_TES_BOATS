@@ -17,9 +17,10 @@ import { createTrajectSchema } from "@pnpm-monorepo/schemas";
 import { LatLng } from "leaflet";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
+import { Map } from "../../components/molecules/Map/Map";
 import { RouterOutput, trpc } from "../../lib/trpc";
-import { Map } from "./Map/Map";
 
 type createTrajectSchemaType = z.infer<typeof createTrajectSchema>;
 
@@ -28,6 +29,7 @@ interface NewTrajectFormProps {
 }
 
 export const NewTrajectForm = (props: NewTrajectFormProps) => {
+  const navigate = useNavigate();
   const utilsTrpc = trpc.useContext();
   const toast = useToast();
   const [destinationPosition, setDestinationPositionState] = useState<LatLng | undefined>(undefined);
@@ -45,7 +47,7 @@ export const NewTrajectForm = (props: NewTrajectFormProps) => {
   });
 
   const trajectMutation = trpc.traject.create.useMutation({
-    onSuccess: async () => {
+    onSuccess: async (data) => {
       toast({
         title: "Trajet créé",
         description: "Le trajet a bien été créé",
@@ -55,6 +57,7 @@ export const NewTrajectForm = (props: NewTrajectFormProps) => {
       });
       await utilsTrpc.traject.getAll.invalidate();
       await utilsTrpc.boat.getAll.invalidate();
+      navigate(`/simulation/${data.id}`);
     },
     onError: (error) => {
       toast({
