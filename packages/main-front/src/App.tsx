@@ -76,10 +76,23 @@ function App() {
         httpBatchLink({
           url: "http://localhost:8000/trpc",
           fetch(url, options) {
-            return fetch(url, {
+            const promise = fetch(url, {
               ...options,
               credentials: "include",
             });
+
+            // Si le serveur renvoie une erreur 401 (unhautorized, donc dans notre cas, token plus valide), on redirige vers la page de login
+            promise
+              .then((res) => {
+                if (res.status === 401) {
+                  window.location.href = "/login";
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+
+            return promise;
           },
         }),
       ],

@@ -57,6 +57,7 @@ export const EditForm = (props: EditFormProps) => {
         <Editable
           value={field.value}
           textAlign="center"
+          submitOnBlur={false}
           isPreviewFocusable={false}
           display="flex"
           alignItems="center"

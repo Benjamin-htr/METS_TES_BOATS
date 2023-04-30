@@ -16,8 +16,14 @@ export const EditableControls = (props: EditableControlsProps) => {
         {...getSubmitButtonProps()}
         aria-label="Valider les modifications"
         isLoading={props.confirmIsLoading}
+        colorScheme="green"
       />
-      <IconButton icon={<AiOutlineClose />} {...getCancelButtonProps()} aria-label="Annuler les modifications" />
+      <IconButton
+        icon={<AiOutlineClose />}
+        {...getCancelButtonProps()}
+        aria-label="Annuler les modifications"
+        colorScheme="red"
+      />
     </ButtonGroup>
   ) : (
     <Flex justifyContent="center">
