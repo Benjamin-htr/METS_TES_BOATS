@@ -14,6 +14,9 @@ export const boatRouter = trpc.router({
       where: {
         id: input.boatId,
       },
+      include: {
+        BoatModel: true,
+      },
     });
   }),
 

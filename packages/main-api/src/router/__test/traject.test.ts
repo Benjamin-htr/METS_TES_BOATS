@@ -7,6 +7,7 @@ import { appRouter } from "../_app";
 test("create traject should fail if boat is already in sea", async () => {
   const prismaMock = mockDeep<PrismaClient>();
 
+  // Mock boat that is already in sea
   const boat = {
     id: 1,
     createdAt: new Date(),
