@@ -2,7 +2,6 @@
 import { trpc } from "../lib/trpc";
 // import { isAuthorizedProcedure } from "../middleware/isAuthorized";
 import { createBoatSchema, editBoatSchema, getBoatSchema } from "@pnpm-monorepo/schemas";
-import { prisma } from "../lib/prismaClient";
 import { isAuthorizedProcedure } from "../middleware/isAuthorized";
 
 export function sum(a: number, b: number): number {
@@ -10,8 +9,8 @@ export function sum(a: number, b: number): number {
 }
 
 export const boatRouter = trpc.router({
-  get: isAuthorizedProcedure.input(getBoatSchema).query(({ input }) => {
-    return prisma.boat.findUnique({
+  get: isAuthorizedProcedure.input(getBoatSchema).query(({ input, ctx }) => {
+    return ctx.prisma.boat.findUnique({
       where: {
         id: input.boatId,
       },
@@ -19,7 +18,7 @@ export const boatRouter = trpc.router({
   }),
 
   getAll: isAuthorizedProcedure.query(({ ctx }) => {
-    return prisma.boat.findMany({
+    return ctx.prisma.boat.findMany({
       where: {
         userId: ctx.user?.id,
       },
@@ -30,8 +29,8 @@ export const boatRouter = trpc.router({
     });
   }),
 
-  delete: isAuthorizedProcedure.input(getBoatSchema).mutation(({ input }) => {
-    return prisma.boat.delete({
+  delete: isAuthorizedProcedure.input(getBoatSchema).mutation(({ input, ctx }) => {
+    return ctx.prisma.boat.delete({
       where: {
         id: input.boatId,
       },
@@ -39,7 +38,7 @@ export const boatRouter = trpc.router({
   }),
 
   create: isAuthorizedProcedure.input(createBoatSchema).mutation(({ input, ctx }) => {
-    return prisma.boat.create({
+    return ctx.prisma.boat.create({
       data: {
         name: input.name,
         latitude: 23,
@@ -59,8 +58,8 @@ export const boatRouter = trpc.router({
     });
   }),
 
-  edit: isAuthorizedProcedure.input(editBoatSchema).mutation(({ input }) => {
-    return prisma.boat.update({
+  edit: isAuthorizedProcedure.input(editBoatSchema).mutation(({ input, ctx }) => {
+    return ctx.prisma.boat.update({
       where: {
         id: input.boatId,
       },

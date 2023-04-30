@@ -1,4 +1,5 @@
 import { createTrajectSchema } from "@pnpm-monorepo/schemas";
+import { TRPCError } from "@trpc/server";
 import { prisma } from "../lib/prismaClient";
 import { trpc } from "../lib/trpc";
 import { isAuthorizedProcedure } from "../middleware/isAuthorized";
@@ -7,13 +8,16 @@ import { boatIsAvailable } from "../services/boat.service";
 export const trajectRouter = trpc.router({
   //permet de créer un trajet
   create: isAuthorizedProcedure.input(createTrajectSchema).mutation(async ({ input, ctx }) => {
-    const isAvailable = await boatIsAvailable(parseInt(input.boatId));
+    const isAvailable = await boatIsAvailable(parseInt(input.boatId), ctx);
 
     if (!isAvailable) {
-      throw new Error("Boat is not available");
+      throw new TRPCError({
+        code: "CONFLICT",
+        message: "Boat is not available",
+      });
     }
 
-    return prisma.traject.create({
+    return ctx.prisma.traject.create({
       data: {
         name: input.name,
         latitude: input.latitudeDestination,

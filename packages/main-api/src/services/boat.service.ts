@@ -1,4 +1,5 @@
 import { prisma } from "../lib/prismaClient";
+import { Context } from "../lib/trpc";
 
 export const defaultBoats = [
   {
@@ -41,8 +42,8 @@ export const createDefaultBoats = async (userId: number) => {
   return result;
 };
 
-export const boatIsAvailable = async (boatId: number) => {
-  const boat = await prisma.boat.findUnique({
+export const boatIsAvailable = async (boatId: number, ctx: Context) => {
+  const boat = await ctx.prisma.boat.findUnique({
     where: {
       id: boatId,
     },
