@@ -12,6 +12,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useRef } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import { RouterOutput, trpc } from "../../../lib/trpc";
 import { GetElementType } from "../../../utils/utilityType";
 import { EditForm } from "./EditForm";
@@ -61,8 +62,8 @@ export const TrajectCard = (props: TrajectCardProps) => {
         <Divider />
         <CardFooter>
           <ButtonGroup spacing="2">
-            <Button variant="solid" colorScheme="blue">
-              Modifier
+            <Button variant="solid" colorScheme="blue" as={RouterLink} to={`/simulation/${props.traject.id}`}>
+              Reprendre
             </Button>
             <Button variant="outline" colorScheme="red" onClick={deleteOnOpen}>
               Supprimer

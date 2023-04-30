@@ -16,7 +16,7 @@ import { NewTraject } from "./pages/NewTraject/NewTraject";
 import { NotFound } from "./pages/NotFound/NotFound";
 import { Profile } from "./pages/Profile/Profile";
 import { Signup } from "./pages/Signup/Signup";
-import { TestMael } from "./pages/TestMael/TestMael";
+import { Simulation } from "./pages/Simulation/Simulation";
 
 const router = createBrowserRouter([
   {
@@ -42,8 +42,8 @@ const router = createBrowserRouter([
             element: <Profile />,
           },
           {
-            path: "/test_mael",
-            element: <TestMael />,
+            path: "/simulation/:id",
+            element: <Simulation />,
           },
         ],
       },

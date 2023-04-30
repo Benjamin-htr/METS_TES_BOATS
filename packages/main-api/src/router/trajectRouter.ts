@@ -78,4 +78,17 @@ export const trajectRouter = trpc.router({
       },
     });
   }),
+
+  get: isAuthorizedProcedure.input(getTrajectSchema).query(({ input, ctx }) => {
+    return ctx.prisma.traject.findUnique({
+      where: {
+        id: input.trajectId,
+      },
+      include: {
+        Boat: true,
+        Wind: true,
+        Wave: true,
+      },
+    });
+  }),
 });
