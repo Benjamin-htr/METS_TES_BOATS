@@ -6,3 +6,8 @@ export const createTrajectSchema = z.object({
   longitudeDestination: z.number(),
   latitudeDestination: z.number(),
 });
+
+export const editTrajectSchema = z.object({
+  trajectId: z.number(),
+  name: z.string(),
+});
