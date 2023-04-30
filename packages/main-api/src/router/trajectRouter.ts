@@ -1,4 +1,4 @@
-import { createTrajectSchema, editTrajectSchema } from "@pnpm-monorepo/schemas";
+import { createTrajectSchema, editTrajectSchema, getTrajectSchema } from "@pnpm-monorepo/schemas";
 import { TRPCError } from "@trpc/server";
 import { prisma } from "../lib/prismaClient";
 import { trpc } from "../lib/trpc";
@@ -67,6 +67,14 @@ export const trajectRouter = trpc.router({
       },
       data: {
         name: input.name,
+      },
+    });
+  }),
+
+  delete: isAuthorizedProcedure.input(getTrajectSchema).mutation(async ({ input, ctx }) => {
+    return ctx.prisma.traject.delete({
+      where: {
+        id: input.trajectId,
       },
     });
   }),

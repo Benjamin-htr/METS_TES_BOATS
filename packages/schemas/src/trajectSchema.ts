@@ -1,5 +1,9 @@
 import { z } from "zod";
 
+export const getTrajectSchema = z.object({
+  trajectId: z.number(),
+});
+
 export const createTrajectSchema = z.object({
   boatId: z.string(),
   name: z.string(),

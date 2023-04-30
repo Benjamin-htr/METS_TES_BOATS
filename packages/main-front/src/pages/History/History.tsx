@@ -1,4 +1,5 @@
-import { Box, Flex, Spinner, Stack, useMediaQuery } from "@chakra-ui/react";
+import { Box, Flex, Link, Spinner, Stack, Text, useMediaQuery } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 import { trpc } from "../../lib/trpc";
 import { TrajectCard } from "./TrajectCard/TrajectCard";
 
@@ -15,7 +16,20 @@ export const History = () => {
   }
 
   if (trajectQuery.isError) {
-    return <Box>Erreur</Box>;
+    return <Box padding="10px">Erreur</Box>;
+  }
+
+  if (trajectQuery.data.length === 0) {
+    return (
+      <Box padding="10px">
+        <Text>
+          Aucun trajet en cours ou terminé, vous pouvez en ajouter un sur la page{" "}
+          <Link as={RouterLink} to={"/new_traject"} color={"blue.500"}>
+            nouveau trajet
+          </Link>{" "}
+        </Text>
+      </Box>
+    );
   }
 
   return (
