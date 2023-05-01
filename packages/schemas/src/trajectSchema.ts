@@ -15,3 +15,14 @@ export const editTrajectSchema = z.object({
   trajectId: z.number(),
   name: z.string(),
 });
+
+export const changeTrajectSpeed = z.object({
+  trajectId: z.number(),
+  speed: z.number(),
+});
+
+export const changeTrajectWind = z.object({
+  trajectId: z.number(),
+  speed: z.number(),
+  direction: z.number(),
+});

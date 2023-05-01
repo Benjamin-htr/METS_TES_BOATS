@@ -1,7 +1,7 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { httpBatchLink } from "@trpc/client";
+import { Operation, createWSClient, httpBatchLink, splitLink, wsLink } from "@trpc/client";
 import { useState } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
@@ -70,30 +70,46 @@ const router = createBrowserRouter([
 
 function App() {
   const [queryClient] = useState(() => new QueryClient());
+
   const [trpcClient] = useState(() =>
     trpc.createClient({
       links: [
-        httpBatchLink({
-          url: "http://localhost:8000/trpc",
-          fetch(url, options) {
-            const promise = fetch(url, {
-              ...options,
-              credentials: "include",
-            });
-
-            // Si le serveur renvoie une erreur 401 (unhautorized, donc dans notre cas, token plus valide), on redirige vers la page de login
-            promise
-              .then((res) => {
-                if (res.status === 401) {
-                  window.location.href = "/login";
-                }
-              })
-              .catch((err) => {
-                console.log(err);
+        splitLink({
+          // Si l'opération est une subscription, on utilise le lien websocket, sinon on utilise le lien http
+          condition: (op: Operation) => op.type === "subscription",
+          true: wsLink({
+            client: createWSClient({
+              url: "ws://localhost:3001",
+              onClose() {
+                console.log("Connection closed");
+              },
+              onOpen() {
+                console.log("Connection opened");
+              },
+            }),
+          }),
+          false: httpBatchLink({
+            url: "http://localhost:8000/trpc",
+            fetch(url, options) {
+              const promise = fetch(url, {
+                ...options,
+                credentials: "include",
               });
 
-            return promise;
-          },
+              // Si le serveur renvoie une erreur 401 (unhautorized, donc dans notre cas, token plus valide), on redirige vers la page de login
+              promise
+                .then((res) => {
+                  if (res.status === 401) {
+                    window.location.href = "/login";
+                  }
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+
+              return promise;
+            },
+          }),
         }),
       ],
     })

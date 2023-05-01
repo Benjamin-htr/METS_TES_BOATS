@@ -14,11 +14,6 @@ export const editBoatSchema = z.object({
   name: z.string(),
 });
 
-export const changeBoatSpeed = z.object({
-  boatId: z.number(),
-  speed: z.number(),
-});
-
 export const updateBoatPosition = z.object({
   boatId: z.number(),
   longitude: z.number(),

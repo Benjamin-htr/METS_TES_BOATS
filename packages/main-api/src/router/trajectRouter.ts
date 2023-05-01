@@ -1,9 +1,16 @@
-import { createTrajectSchema, editTrajectSchema, getTrajectSchema } from "@pnpm-monorepo/schemas";
+import {
+  changeTrajectSpeed,
+  changeTrajectWind,
+  createTrajectSchema,
+  editTrajectSchema,
+  getTrajectSchema,
+} from "@pnpm-monorepo/schemas";
 import { TRPCError } from "@trpc/server";
 import { prisma } from "../lib/prismaClient";
 import { trpc } from "../lib/trpc";
 import { isAuthorizedProcedure } from "../middleware/isAuthorized";
 import { boatIsAvailable } from "../services/boat.service";
+import { ee } from "./simulationRouter";
 
 export const trajectRouter = trpc.router({
   //permet de créer un trajet
@@ -87,14 +94,47 @@ export const trajectRouter = trpc.router({
       include: {
         Boat: {
           include: {
-            Fuel: true,
-            Speed: true,
             BoatModel: true,
           },
         },
+        Speed: true,
+        Fuel: true,
         Wind: true,
         Wave: true,
       },
     });
+  }),
+  changeSpeed: isAuthorizedProcedure.input(changeTrajectSpeed).mutation(async ({ input, ctx }) => {
+    const Speed = await ctx.prisma.speed.create({
+      data: {
+        speed: input.speed,
+        Traject: {
+          connect: {
+            id: input.trajectId,
+          },
+        },
+      },
+    });
+
+    ee.emit("speedChange", Speed);
+
+    return Speed;
+  }),
+
+  changeWind: isAuthorizedProcedure.input(changeTrajectWind).mutation(async ({ input, ctx }) => {
+    const Wind = await ctx.prisma.wind.create({
+      data: {
+        speed: input.speed,
+        direction: input.direction,
+        Traject: {
+          connect: {
+            id: input.trajectId,
+          },
+        },
+      },
+    });
+    ee.emit("windChange", Wind);
+
+    return Wind;
   }),
 });

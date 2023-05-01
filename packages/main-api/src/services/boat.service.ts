@@ -4,13 +4,13 @@ import { Context } from "../lib/trpc";
 export const defaultBoats = [
   {
     name: "Espérance",
-    boatModelId: 4,
+    boatModelId: 2,
     latitude: 23,
     longitude: -173,
   },
   {
     name: "US Sharkido",
-    boatModelId: 2,
+    boatModelId: 3,
     latitude: 44,
     longitude: -125,
   },

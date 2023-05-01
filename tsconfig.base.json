@@ -6,7 +6,7 @@
     "declaration": true,
     "declarationMap": true,
     "esModuleInterop": true,
-    "module": "commonjs",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "noImplicitReturns": true,
     "pretty": true,

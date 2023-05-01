@@ -1,7 +1,7 @@
 // import { getMeHandler } from "../controllers/user.controller";
 import { trpc } from "../lib/trpc";
 // import { isAuthorizedProcedure } from "../middleware/isAuthorized";
-import { changeBoatSpeed, createBoatSchema, editBoatSchema, getBoatSchema } from "@pnpm-monorepo/schemas";
+import { createBoatSchema, editBoatSchema, getBoatSchema } from "@pnpm-monorepo/schemas";
 import { isAuthorizedProcedure } from "../middleware/isAuthorized";
 
 export function sum(a: number, b: number): number {
@@ -68,21 +68,6 @@ export const boatRouter = trpc.router({
       },
       data: {
         name: input.name,
-      },
-    });
-  }),
-
-  changeSpeed: isAuthorizedProcedure.input(changeBoatSpeed).mutation(({ input, ctx }) => {
-    return ctx.prisma.boat.update({
-      where: {
-        id: input.boatId,
-      },
-      data: {
-        Speed: {
-          create: {
-            speed: input.speed,
-          },
-        },
       },
     });
   }),

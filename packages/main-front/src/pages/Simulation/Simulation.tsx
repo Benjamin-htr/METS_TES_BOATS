@@ -1,5 +1,6 @@
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import { LatLng } from "leaflet";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Map } from "../../components/molecules/Map/Map";
 import { trpc } from "../../lib/trpc";
@@ -12,9 +13,22 @@ export const Simulation = () => {
     throw new Error("No id provided");
   }
 
+  const [boatPosition, setBoatPosition] = useState<LatLng | null>(null);
+
   const trajectQuery = trpc.traject.get.useQuery({
     trajectId: parseInt(id),
   });
+
+  trpc.simulation.getPositions.useSubscription(
+    { trajectId: parseInt(id) },
+
+    {
+      onData(data) {
+        setBoatPosition(new LatLng(data.latitude, data.longitude));
+        //console.log(data);
+      },
+    }
+  );
 
   if (trajectQuery.isLoading) {
     return <Box>Loading...</Box>;
@@ -35,7 +49,7 @@ export const Simulation = () => {
       </Flex>
       <SimulationIndicators traject={trajectQuery.data} />
       <Map
-        boatPosition={new LatLng(trajectQuery.data.Boat.latitude, trajectQuery.data.Boat.longitude)}
+        boatPosition={boatPosition ?? new LatLng(trajectQuery.data.Boat.latitude, trajectQuery.data.Boat.longitude)}
         cameraPosition={new LatLng(trajectQuery.data.Boat.latitude, trajectQuery.data.Boat.longitude)}
         allowedControl={false}
         destinationPosition={new LatLng(trajectQuery.data.latitude, trajectQuery.data.longitude)}
