@@ -1,4 +1,3 @@
-import { z } from "zod";
 import { trpc } from "../lib/trpc";
 import { authRouter } from "./authRouter";
 import { boatRouter } from "./boatRouter";
@@ -14,11 +13,6 @@ export const appRouter = trpc.router({
   modelBoat: modelBoatRouter,
   traject: trajectRouter,
   simulation: simulationRouter,
-  hello: trpc.procedure.input(z.object({ text: z.string() })).query(({ input }) => {
-    return {
-      greeting: `Hello ${input.text}`,
-    };
-  }),
 });
 
 export type AppRouter = typeof appRouter;

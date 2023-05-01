@@ -1,11 +1,14 @@
+import { Speed } from "@prisma/client";
 import { observable } from "@trpc/server/observable";
 import { EventEmitter } from "events";
 import { z } from "zod";
 import { prisma } from "../lib/prismaClient";
 import { trpc } from "../lib/trpc";
+import { calculateNextPosition } from "../services/simulation.service";
 
 interface MyEvents {
   positionUpdate: () => void;
+  speedChange: (speed: Speed) => void;
 }
 declare interface MyEventEmitter {
   on<TEv extends keyof MyEvents>(event: TEv, listener: MyEvents[TEv]): this;
@@ -16,9 +19,9 @@ declare interface MyEventEmitter {
 
 class MyEventEmitter extends EventEmitter {}
 
-const ee = new MyEventEmitter();
+export const ee = new MyEventEmitter();
 
-// every 1s, positions are updated
+// every 1s, positions is updated
 setInterval(() => {
   ee.emit("positionUpdate");
 }, 1000);
@@ -37,6 +40,7 @@ export const simulationRouter = trpc.router({
         },
         include: {
           Boat: true,
+          Speed: true,
         },
       });
 
@@ -45,11 +49,29 @@ export const simulationRouter = trpc.router({
         longitude: traject?.Boat.longitude ?? 0,
       };
 
-      return observable((emit) => {
+      const destinationPos = {
+        latitude: traject?.latitude ?? 0,
+        longitude: traject?.longitude ?? 0,
+      };
+
+      let currentSpeed = traject?.Speed.sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      }).at(0);
+
+      return observable<{ latitude: number; longitude: number }>((emit) => {
         const handler = () => {
+          const pos = calculateNextPosition(
+            prev ?? {
+              latitude: 0,
+              longitude: 0,
+            },
+            destinationPos,
+            currentSpeed?.speed ?? 0
+          );
+
           const newData = {
-            latitude: (prev?.latitude ?? 0) + 0.0001,
-            longitude: (prev?.longitude ?? 0) + 0.0001,
+            latitude: pos.latitude,
+            longitude: pos.longitude,
           };
           //console.log("newData", newData);
           emit.next(newData);
@@ -57,6 +79,11 @@ export const simulationRouter = trpc.router({
         };
 
         ee.on("positionUpdate", handler);
+
+        ee.on("speedChange", (data) => {
+          currentSpeed = data;
+          console.log("speedChange");
+        });
 
         return () => {
           ee.off("positionUpdate", handler);
