@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `Traject` MODIFY `latitude` DOUBLE NOT NULL DEFAULT 23,
+    MODIFY `longitude` DOUBLE NOT NULL DEFAULT -173;

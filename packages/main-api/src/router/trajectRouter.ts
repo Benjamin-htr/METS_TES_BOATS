@@ -1,13 +1,25 @@
-import { createTrajectSchema } from "@pnpm-monorepo/schemas";
+import { createTrajectSchema, editTrajectSchema, getTrajectSchema } from "@pnpm-monorepo/schemas";
+import { TRPCError } from "@trpc/server";
 import { prisma } from "../lib/prismaClient";
 import { trpc } from "../lib/trpc";
 import { isAuthorizedProcedure } from "../middleware/isAuthorized";
+import { boatIsAvailable } from "../services/boat.service";
 
 export const trajectRouter = trpc.router({
   //permet de créer un trajet
-  create: isAuthorizedProcedure.input(createTrajectSchema).mutation(({ input, ctx }) => {
-    const traject = prisma.traject.create({
+  create: isAuthorizedProcedure.input(createTrajectSchema).mutation(async ({ input, ctx }) => {
+    const isAvailable = await boatIsAvailable(parseInt(input.boatId), ctx);
+
+    if (!isAvailable) {
+      throw new TRPCError({
+        code: "CONFLICT",
+        message: "Boat is not available",
+      });
+    }
+
+    return ctx.prisma.traject.create({
       data: {
+        name: input.name,
         latitude: input.latitudeDestination,
         longitude: input.longitudeDestination,
         User: {
@@ -17,7 +29,7 @@ export const trajectRouter = trpc.router({
         },
         Boat: {
           connect: {
-            id: input.boatId,
+            id: parseInt(input.boatId),
           },
         },
         Wind: {
@@ -34,12 +46,6 @@ export const trajectRouter = trpc.router({
         },
       },
     });
-    return {
-      status: "success",
-      data: {
-        traject,
-      },
-    };
   }),
   getAll: isAuthorizedProcedure.query(({ ctx }) => {
     return prisma.traject.findMany({
@@ -48,6 +54,44 @@ export const trajectRouter = trpc.router({
       },
       include: {
         Boat: true,
+        Wind: true,
+        Wave: true,
+      },
+    });
+  }),
+
+  edit: isAuthorizedProcedure.input(editTrajectSchema).mutation(async ({ input, ctx }) => {
+    return ctx.prisma.traject.update({
+      where: {
+        id: input.trajectId,
+      },
+      data: {
+        name: input.name,
+      },
+    });
+  }),
+
+  delete: isAuthorizedProcedure.input(getTrajectSchema).mutation(async ({ input, ctx }) => {
+    return ctx.prisma.traject.delete({
+      where: {
+        id: input.trajectId,
+      },
+    });
+  }),
+
+  get: isAuthorizedProcedure.input(getTrajectSchema).query(({ input, ctx }) => {
+    return ctx.prisma.traject.findUnique({
+      where: {
+        id: input.trajectId,
+      },
+      include: {
+        Boat: {
+          include: {
+            Fuel: true,
+            Speed: true,
+            BoatModel: true,
+          },
+        },
         Wind: true,
         Wave: true,
       },

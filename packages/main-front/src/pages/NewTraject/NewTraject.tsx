@@ -1,14 +1,10 @@
 import { Flex, Link, Spinner, Text } from "@chakra-ui/react";
-import { LatLng } from "leaflet";
-import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { trpc } from "../../lib/trpc";
-import { Map } from "./Map/Map";
+import { NewTrajectForm } from "./NewTrajectForm";
 
 export const NewTraject = () => {
   const boatsQuery = trpc.boat.getAll.useQuery();
-  const boatPosition: LatLng = new LatLng(23, -173);
-  const [destinationPosition, setDestinationPositionState] = useState<LatLng | undefined>(undefined);
 
   if (boatsQuery.isLoading) {
     return (
@@ -22,7 +18,9 @@ export const NewTraject = () => {
     return <Text>Erreur lors du chargement des bateaux</Text>;
   }
 
-  const availableBoats = boatsQuery.data.filter((boat) => boat.isAvailable);
+  const availableBoats = boatsQuery.data.filter(
+    (boat) => boat.Traject.find((t) => t.finishedDate === null) === undefined
+  );
 
   if (availableBoats.length === 0) {
     return (
@@ -42,23 +40,5 @@ export const NewTraject = () => {
     );
   }
 
-  return (
-    <Flex direction={"column"} flexGrow={1} padding={"10px"}>
-      <Text>Choisissez un bateau</Text>
-
-      <Text>
-        {destinationPosition
-          ? `Distance: ${(boatPosition.distanceTo(destinationPosition) / 1000).toFixed(0)} kms`
-          : "Cliquez sur la carte pour définir une destination"}
-      </Text>
-      <Map
-        boatPosition={boatPosition}
-        cameraPosition={new LatLng(23, -173)}
-        allowedControl={true}
-        onDestinationPositionChange={(e) => {
-          setDestinationPositionState(e?.latlng ?? new LatLng(0, 0));
-        }}
-      />
-    </Flex>
-  );
+  return <NewTrajectForm boats={availableBoats} />;
 };

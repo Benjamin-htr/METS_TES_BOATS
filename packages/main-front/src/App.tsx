@@ -16,7 +16,7 @@ import { NewTraject } from "./pages/NewTraject/NewTraject";
 import { NotFound } from "./pages/NotFound/NotFound";
 import { Profile } from "./pages/Profile/Profile";
 import { Signup } from "./pages/Signup/Signup";
-import { TestMael } from "./pages/TestMael/TestMael";
+import { Simulation } from "./pages/Simulation/Simulation";
 
 const router = createBrowserRouter([
   {
@@ -42,8 +42,8 @@ const router = createBrowserRouter([
             element: <Profile />,
           },
           {
-            path: "/test_mael",
-            element: <TestMael />,
+            path: "/simulation/:id",
+            element: <Simulation />,
           },
         ],
       },
@@ -76,10 +76,23 @@ function App() {
         httpBatchLink({
           url: "http://localhost:8000/trpc",
           fetch(url, options) {
-            return fetch(url, {
+            const promise = fetch(url, {
               ...options,
               credentials: "include",
             });
+
+            // Si le serveur renvoie une erreur 401 (unhautorized, donc dans notre cas, token plus valide), on redirige vers la page de login
+            promise
+              .then((res) => {
+                if (res.status === 401) {
+                  window.location.href = "/login";
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+
+            return promise;
           },
         }),
       ],

@@ -31,7 +31,7 @@ export const BoatDeleteAlert = (props: BoatDeleteAlertProps) => {
     <AlertDialogBasic
       {...props}
       heading="Suppression du bateau ?"
-      body="Êtes-vous sûr de vouloir supprimer ce bateau ? Ce supprimera aussi tous les trajets qui lui sont associés."
+      body="Êtes-vous sûr de vouloir supprimer ce bateau ? Cela supprimera aussi tous les trajets qui lui sont associés."
       confirmFunction={() => deleteBoatMutation.mutate({ boatId: props.boatId })}
       isLoading={deleteBoatMutation.isLoading}
     />

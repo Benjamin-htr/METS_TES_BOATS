@@ -1,30 +1,18 @@
 // import { getMeHandler } from "../controllers/user.controller";
 import { trpc } from "../lib/trpc";
 // import { isAuthorizedProcedure } from "../middleware/isAuthorized";
-import { getBoatSchema, updateBoatPosition, getAllBoatFromUser } from "@pnpm-monorepo/schemas";
-import { createBoatSchema, editBoatSchema, getBoatSchema } from "@pnpm-monorepo/schemas";
-import { prisma } from "../lib/prismaClient";
-import { trpc } from "../lib/trpc";
+import { changeBoatSpeed, createBoatSchema, editBoatSchema, getBoatSchema } from "@pnpm-monorepo/schemas";
 import { isAuthorizedProcedure } from "../middleware/isAuthorized";
-import { defaultBoat } from "../services/boat.service";
 
 export function sum(a: number, b: number): number {
   return a + b;
 }
 
 export const boatRouter = trpc.router({
-  get: isAuthorizedProcedure.input(getBoatSchema).query(({ input }) => {
-    return prisma.boat.findUnique({
+  get: isAuthorizedProcedure.input(getBoatSchema).query(({ input, ctx }) => {
+    return ctx.prisma.boat.findUnique({
       where: {
         id: input.boatId,
-      },
-    });
-  }),
-
-  getAll: isAuthorizedProcedure.query(({ ctx }) => {
-    return prisma.boat.findMany({
-      where: {
-        userId: ctx.user?.id,
       },
       include: {
         BoatModel: true,
@@ -32,8 +20,20 @@ export const boatRouter = trpc.router({
     });
   }),
 
-  delete: isAuthorizedProcedure.input(getBoatSchema).mutation(({ input }) => {
-    return prisma.boat.delete({
+  getAll: isAuthorizedProcedure.query(({ ctx }) => {
+    return ctx.prisma.boat.findMany({
+      where: {
+        userId: ctx.user?.id,
+      },
+      include: {
+        BoatModel: true,
+        Traject: true,
+      },
+    });
+  }),
+
+  delete: isAuthorizedProcedure.input(getBoatSchema).mutation(({ input, ctx }) => {
+    return ctx.prisma.boat.delete({
       where: {
         id: input.boatId,
       },
@@ -41,11 +41,12 @@ export const boatRouter = trpc.router({
   }),
 
   create: isAuthorizedProcedure.input(createBoatSchema).mutation(({ input, ctx }) => {
-    return prisma.boat.create({
+    return ctx.prisma.boat.create({
       data: {
         name: input.name,
-        latitude: defaultBoat.latitude,
-        longitude: defaultBoat.longitude,
+        latitude: 23,
+        longitude: -173,
+
         BoatModel: {
           connect: {
             id: parseInt(input.boatModelId),
@@ -60,13 +61,28 @@ export const boatRouter = trpc.router({
     });
   }),
 
-  edit: isAuthorizedProcedure.input(editBoatSchema).mutation(({ input }) => {
-    return prisma.boat.update({
+  edit: isAuthorizedProcedure.input(editBoatSchema).mutation(({ input, ctx }) => {
+    return ctx.prisma.boat.update({
       where: {
         id: input.boatId,
       },
       data: {
         name: input.name,
+      },
+    });
+  }),
+
+  changeSpeed: isAuthorizedProcedure.input(changeBoatSpeed).mutation(({ input, ctx }) => {
+    return ctx.prisma.boat.update({
+      where: {
+        id: input.boatId,
+      },
+      data: {
+        Speed: {
+          create: {
+            speed: input.speed,
+          },
+        },
       },
     });
   }),
