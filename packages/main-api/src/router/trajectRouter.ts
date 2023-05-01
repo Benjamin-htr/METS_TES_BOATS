@@ -126,21 +126,15 @@ export const trajectRouter = trpc.router({
       data: {
         speed: input.speed,
         direction: input.direction,
-        trajectId: input.trajectId,
-      },
-    });
-
-    return ctx.prisma.traject.update({
-      where: {
-        id: input.trajectId,
-      },
-      data: {
-        Wind: {
+        Traject: {
           connect: {
-            id: Wind.id,
+            id: input.trajectId,
           },
         },
       },
     });
+    ee.emit("windChange", Wind);
+
+    return Wind;
   }),
 });
