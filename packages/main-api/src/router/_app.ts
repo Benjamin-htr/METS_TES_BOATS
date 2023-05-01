@@ -3,6 +3,7 @@ import { trpc } from "../lib/trpc";
 import { authRouter } from "./authRouter";
 import { boatRouter } from "./boatRouter";
 import { modelBoatRouter } from "./modelBoatRouter";
+import { simulationRouter } from "./simulationRouter";
 import { trajectRouter } from "./trajectRouter";
 import { userRouter } from "./userRouter";
 
@@ -12,6 +13,7 @@ export const appRouter = trpc.router({
   boat: boatRouter,
   modelBoat: modelBoatRouter,
   traject: trajectRouter,
+  simulation: simulationRouter,
   hello: trpc.procedure.input(z.object({ text: z.string() })).query(({ input }) => {
     return {
       greeting: `Hello ${input.text}`,

@@ -20,7 +20,6 @@ import {
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { changeBoatSpeed } from "@pnpm-monorepo/schemas";
-import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { BsSpeedometer } from "react-icons/bs";
 import { z } from "zod";
@@ -40,11 +39,9 @@ export const SpeedIndicator = (props: SpeedIndicatorProps) => {
 
   const currentSpeed = props.traject.Boat.Speed.sort((a, b) => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-  })[0];
+  }).at(0);
 
   const defaultSpeed = currentSpeed?.speed ?? 0;
-
-  const [sliderValue, setSliderValue] = useState(defaultSpeed);
 
   const { register, handleSubmit, control } = useForm<changeBoatSpeedSchemaType>({
     resolver: zodResolver(changeBoatSpeed),
@@ -71,7 +68,7 @@ export const SpeedIndicator = (props: SpeedIndicatorProps) => {
           <Flex direction={"column"} align={"center"}>
             <Icon as={BsSpeedometer} boxSize={5} />
             <Text fontSize={"xs"} lineHeight={"1em"} fontWeight={500}>
-              {currentSpeed?.speed || 0} noeuds
+              {currentSpeed?.speed ?? 0} noeuds
             </Text>
           </Flex>
         </Indicator>

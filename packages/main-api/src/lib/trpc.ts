@@ -6,8 +6,8 @@ import { prisma } from "./prismaClient";
 
 interface CreateContextOptions {
   user: User | null;
-  res?: trpcExpress.CreateExpressContextOptions["res"];
   req?: trpcExpress.CreateExpressContextOptions["req"];
+  res?: trpcExpress.CreateExpressContextOptions["res"];
   prisma?: PrismaClient;
 }
 export const createInnerTRPCContext = (opts: CreateContextOptions) => {
@@ -19,7 +19,8 @@ export const createInnerTRPCContext = (opts: CreateContextOptions) => {
   };
 };
 
-export const createContext = async ({ req, res }: trpcExpress.CreateExpressContextOptions) => {
+export const createContext = async (opts: trpcExpress.CreateExpressContextOptions) => {
+  const { req, res } = opts;
   const { user } = await deserializeUser({ req, res });
   return { ...createInnerTRPCContext({ user, req, res }) };
 };

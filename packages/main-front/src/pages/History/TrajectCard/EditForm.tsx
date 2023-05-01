@@ -17,7 +17,7 @@ export const EditForm = (props: EditFormProps) => {
   const toast = useToast();
   const utilsTrpc = trpc.useContext();
 
-  const { handleSubmit, setValue, control } = useForm<editTrajectSchemaType>({
+  const { setValue, control } = useForm<editTrajectSchemaType>({
     resolver: zodResolver(editTrajectSchema),
     defaultValues: { name: props.traject.name },
   });

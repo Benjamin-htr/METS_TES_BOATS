@@ -16,6 +16,15 @@ export const Simulation = () => {
     trajectId: parseInt(id),
   });
 
+  trpc.simulation.getPositions.useSubscription(
+    { trajectId: parseInt(id) },
+    {
+      onData(data) {
+        console.log(data);
+      },
+    }
+  );
+
   if (trajectQuery.isLoading) {
     return <Box>Loading...</Box>;
   }
