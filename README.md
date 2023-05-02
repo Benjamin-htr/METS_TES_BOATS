@@ -20,7 +20,7 @@ Plusieurs étapes sont nécessaires pour installer le projet :
 
 Pour installer le projet, il faut, au préalable, installer les outils suivants :
 
-- [NodeJS](https://nodejs.org/en/download) : je conseille de l'installer via [nvm](https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/) qui permet de gérer plusieurs versions de nodeJS sur la même machine (pratique pour jongler entre les projets).
+- [NodeJS](https://nodejs.org/en/download) : je conseille de l'installer via [nvm](https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/) qui permet de gérer plusieurs versions de nodeJS sur la même machine (pratique pour jongler entre les projets). ATTENTION : il faut installer une version de node au moins supérieure à la 18.0.0.
 - [pnpm](https://pnpm.io/installation) : il s'agit d'un gestionnaire de dépendances qui permet de gérer les dépendances de manière plus efficace que npm ou yarn. Il est aussi utlisé pour gérer les monorepos via les [worskpaces](https://pnpm.io/workspaces).
 - [Git](https://git-scm.com/downloads)
 
@@ -42,12 +42,22 @@ pnpm install
 
 ### Lancement du front
 
-Pour lancer le front, il faut lancer la commande suivante (dans le dossier packages/main-front):
+Pour lancer le front, il faut lancer la commande suivante (à la racine du monorepo):
 
 ```bash
-pnpm run dev
+pnpm run main-front
 ```
 
 ### Lancement de l'api
 
-Pour lancer l'api, il faut lancer la commande suivante (dans le dossier packages/main-api):
+Il faut lancer la commande suivante afin de générer le client prisma
+
+```bash
+pnpm exec generate-prisma
+```
+
+Pour lancer l'api, il faut lancer la commande suivante (à la racine du monorepo):
+
+```bash
+pnpm run main-api
+```
