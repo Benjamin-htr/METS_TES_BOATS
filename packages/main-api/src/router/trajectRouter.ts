@@ -10,25 +10,33 @@ import { prisma } from "../lib/prismaClient";
 import { trpc } from "../lib/trpc";
 import { isAuthorizedProcedure } from "../middleware/isAuthorized";
 import { boatIsAvailable } from "../services/boat.service";
+import { calculateDistance } from "../services/simulation.service";
 import { ee } from "./simulationRouter";
 
 export const trajectRouter = trpc.router({
   //permet de créer un trajet
   create: isAuthorizedProcedure.input(createTrajectSchema).mutation(async ({ input, ctx }) => {
-    const isAvailable = await boatIsAvailable(parseInt(input.boatId), ctx);
+    const boat = await boatIsAvailable(parseInt(input.boatId), ctx);
 
-    if (!isAvailable) {
+    if (!boat) {
       throw new TRPCError({
         code: "CONFLICT",
         message: "Boat is not available",
       });
     }
 
+    const distance =
+      calculateDistance(
+        { latitude: boat.latitude, longitude: boat.longitude },
+        { latitude: input.latitudeDestination, longitude: input.longitudeDestination }
+      ) * 100;
+
     return ctx.prisma.traject.create({
       data: {
         name: input.name,
         latitude: input.latitudeDestination,
         longitude: input.longitudeDestination,
+        kilometers: distance,
         User: {
           connect: {
             id: ctx.user?.id,
@@ -63,6 +71,7 @@ export const trajectRouter = trpc.router({
         Boat: true,
         Wind: true,
         Wave: true,
+        Speed: true,
       },
     });
   }),

@@ -13,7 +13,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useRef } from "react";
-import { RouterOutput } from "../../../../lib/trpc";
+import { RouterOutput, trpc } from "../../../../lib/trpc";
 import { GetElementType } from "../../../../utils/utilityType";
 import { BoatDeleteAlert } from "./BoatDeleteAlert";
 import { BoatEditModal } from "./BoatEditModal";
@@ -23,6 +23,8 @@ interface BoatCardProps {
 }
 
 export const BoatCard = (props: BoatCardProps) => {
+  const kilometersQuery = trpc.boat.getKilometers.useQuery({ boatId: props.boat.id });
+
   const { isOpen: deleteIsOpen, onOpen: deleteOnOpen, onClose: deleteOnClose } = useDisclosure();
   const { isOpen: editIsOpen, onOpen: editOnOpen, onClose: editOnClose } = useDisclosure();
 
@@ -71,7 +73,7 @@ export const BoatCard = (props: BoatCardProps) => {
             </Text>
             <Flex justifyContent={"space-between"}>
               <Text color="blue.600" fontSize="2xl">
-                0 kms
+                {kilometersQuery.data} kms
               </Text>
               <Text color="blue.600" fontSize="2xl">
                 {props.boat.Traject.find((t) => t.finishedDate === null) === undefined ? "À quai" : "En mer"}

@@ -1,4 +1,4 @@
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import { LatLng } from "leaflet";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
@@ -25,7 +25,6 @@ export const Simulation = () => {
     {
       onData(data) {
         setBoatPosition(new LatLng(data.latitude, data.longitude));
-        //console.log(data);
       },
     }
   );
@@ -46,6 +45,9 @@ export const Simulation = () => {
     <Flex direction={"column"} flexGrow={1}>
       <Flex justify={"center"} margin={"15px"}>
         <Heading>{trajectQuery.data.name}</Heading>
+        <Text fontSize={"xl"} margin={"0 0 0 10px"}>
+          {trajectQuery.data.finishedDate ? "(Terminé)" : ""}
+        </Text>
       </Flex>
       <SimulationIndicators traject={trajectQuery.data} />
       <Map

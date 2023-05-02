@@ -12,10 +12,6 @@ export const SimulationIndicators = (props: SimulationIndicatorsProps) => {
     throw new Error("No traject provided");
   }
 
-  const currentWind = props.traject.Wind.sort((a, b) => {
-    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-  })[0];
-
   return (
     <Flex justify={"space-between"}>
       <WindIndicator traject={props.traject} />

@@ -36,6 +36,7 @@ model Traject {
   Speed        Speed[]
   latitude     Float
   longitude    Float
+  kilometers   Float
 }
 
 model BoatModel {

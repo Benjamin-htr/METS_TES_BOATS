@@ -7,62 +7,20 @@ import { appRouter } from "../_app";
 test("create user", async () => {
   const prismaMock = mockDeep<PrismaClient>();
 
-  // Mock user 
+  // Mock user
   const user = {
     id: 1,
     createdAt: new Date(),
     updatedAt: new Date(),
     username: "test_user",
     password: "azertyuiop",
-    // Boat: [
-    //   {
-    //     id: 1,
-    //     createdAt: new Date(),
-    //     updatedAt: new Date(),
-    //     name: "test",
-    //     latitude: 23,
-    //     longitude: -173,
-    //     userId: 14,
-    //     boatModelId: 1,
-    //     Traject: [
-    //       {
-    //         id: 1,
-    //         createdAt: new Date(),
-    //         updatedAt: new Date(),
-    //         name: "test",
-    //         latitudeDestination: 23,
-    //         longitudeDestination: -173,
-    //         boatId: 1,
-    //         finishedDate: null,
-    //       },
-    //     ],
-    //   },
-    // ],
-    // Traject: [
-    //   {
-    //     id: 1,
-    //     createdAt: new Date(),
-    //     updatedAt: new Date(),
-    //     name: "test",
-    //     latitudeDestination: 23,
-    //     longitudeDestination: -173,
-    //     boatId: 1,
-    //     finishedDate: null,
-    //   },
-    // ],
   };
 
-  prismaMock.user.findUnique.mockResolvedValue(user);
+  prismaMock.user.create.mockResolvedValue(user);
 
   const caller = appRouter.createCaller(
     createInnerTRPCContext({
-      user: {
-        id: 14,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        username: "test",
-        password: "test",
-      },
+      user: null,
       prisma: prismaMock,
     })
   );

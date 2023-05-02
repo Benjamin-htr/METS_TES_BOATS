@@ -7,7 +7,7 @@ import { trpc } from "../lib/trpc";
 import { calculateDistance, calculateNextPosition } from "../services/simulation.service";
 
 interface MyEvents {
-  positionUpdate: () => void;
+  positionUpdate: () => Promise<void>;
   speedChange: (speed: Speed) => void;
   windChange: (wind: Wind) => void;
 }
@@ -65,7 +65,7 @@ export const simulationRouter = trpc.router({
       }).at(0);
 
       return observable<{ latitude: number; longitude: number }>((emit) => {
-        const handler = () => {
+        const handler = async () => {
           const pos = calculateNextPosition(
             prev ?? {
               latitude: 0,
@@ -80,10 +80,25 @@ export const simulationRouter = trpc.router({
             latitude: pos.latitude,
             longitude: pos.longitude,
           };
-          //console.log("newData", newData);
           emit.next(newData);
+          console.log(newData);
 
           if (calculateDistance(newData, destinationPos) <= (currentSpeed?.speed ?? 0)) {
+            await prisma.traject.update({
+              where: {
+                id: input.trajectId,
+              },
+              data: {
+                finishedDate: new Date(),
+                Boat: {
+                  update: {
+                    latitude: newData.latitude,
+                    longitude: newData.longitude,
+                  },
+                },
+              },
+            });
+
             emit.complete();
             console.log("complete");
           }

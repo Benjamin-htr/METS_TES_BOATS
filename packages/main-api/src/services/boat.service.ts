@@ -56,5 +56,5 @@ export const boatIsAvailable = async (boatId: number, ctx: Context) => {
     return false;
   }
 
-  return true;
+  return boat;
 };

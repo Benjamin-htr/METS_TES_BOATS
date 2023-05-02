@@ -32,6 +32,31 @@ export const boatRouter = trpc.router({
     });
   }),
 
+  getKilometers: isAuthorizedProcedure.input(getBoatSchema).query(async ({ input, ctx }) => {
+    const trajects = await ctx.prisma.traject.findMany({
+      where: {
+        boatId: input.boatId,
+        finishedDate: {
+          not: null,
+        },
+      },
+      include: {
+        Boat: true,
+      },
+    });
+
+    if (!trajects) {
+      throw new Error("trajects not found");
+    }
+
+    let distanceTotal = 0;
+    trajects.forEach((traj) => {
+      distanceTotal += traj.kilometers;
+    });
+
+    return Math.round(distanceTotal);
+  }),
+
   delete: isAuthorizedProcedure.input(getBoatSchema).mutation(({ input, ctx }) => {
     return ctx.prisma.boat.delete({
       where: {
@@ -71,26 +96,4 @@ export const boatRouter = trpc.router({
       },
     });
   }),
-
-  //   A FAIRE :
-  //   getAllBoat: trpc.procedure.input(getBoatSchema).query(({ input }) => {
-  //     return prisma.boat.findUnique({
-  //       where: {
-  //         id: input.boatId,
-  //       },
-  //     });
-  //   }),
-
-  //Stand by :
-
-  //   updateBoatCoordinates: trpc.procedure.input(updateBoatPosition).query(({ input }) => {
-  //     return prisma.boat.update({
-  //       where: {
-  //         id: input.boatId,
-  //       },
-  //       data: {
-
-  //       },
-  //     });
-  //   }),
 });
