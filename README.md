@@ -45,7 +45,7 @@ pnpm install
 Pour lancer le front, il faut lancer la commande suivante (à la racine du monorepo):
 
 ```bash
-pnpm run main-front
+pnpm run --filter main-front dev
 ```
 
 ### Lancement de l'api
@@ -53,11 +53,11 @@ pnpm run main-front
 Il faut lancer la commande suivante afin de générer le client prisma
 
 ```bash
-pnpm exec generate-prisma
+pnpm --filter main-api exec prisma generate
 ```
 
 Pour lancer l'api, il faut lancer la commande suivante (à la racine du monorepo):
 
 ```bash
-pnpm run main-api
+pnpm run --filter main-api dev
 ```

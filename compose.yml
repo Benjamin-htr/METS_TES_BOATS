@@ -1,0 +1,18 @@
+services:
+  mysql:
+    image: "mysql/mysql-server:8.0"
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "root_password"
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    volumes:
+      - "met_tes_boats:/var/lib/mysql"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-pMYSQL_PASSWORD"]
+      retries: 3
+      timeout: 5s
+
+volumes:
+  met_tes_boats:

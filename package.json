@@ -4,9 +4,7 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "test-api": "cd ./packages/main-api && pnpm run test",
-    "main-front": "cd ./packages/main-front && pnpm run dev",
-    "main-api": "cd ./packages/main-api && pnpm run dev",
+    "test": "pnpm run --filter main-api test",
     "generate-prisma": "cd ./packages/main-api && pnpm prisma generate"
   },
   "keywords": [],
