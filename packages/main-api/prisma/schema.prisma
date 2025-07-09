@@ -47,7 +47,7 @@ model BoatModel {
   //En litres
   maxFuel     Float
   description String?
-  imageUrl    String?
+  imageUrl    String?  @db.VarChar(400)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   Boat        Boat[]

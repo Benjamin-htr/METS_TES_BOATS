@@ -1,6 +1,6 @@
 # METS TES BOATS
 
-METS TES BOATS est un projet de développement de simulation maritime. Il s'agit d'un projet réalisé dans les cadre de l'UE de développement web de l'ISEN en quatième année.
+METS TES BOATS est un projet de développement de simulation maritime. Il s'agit d'un projet réalisé dans le cadre de l'UE de développement web de l'ISEN en quatrième année.
 
 ## Equipe
 
@@ -50,10 +50,33 @@ pnpm run --filter main-front dev
 
 ### Lancement de l'api
 
+Pour utiliser l'API, il faut une base de données MySQL. Afin de faciliter le test de ce projet en local, j'ai ajouté un docker compose à la racine du monorepo qui permet de lancer une base de données MySQL en local.
+
+Pour cela, il faut installer [Docker](https://www.docker.com/products/docker-desktop) (si vous êtes sur macOS, je vous conseille d'utiliser [Orbstack](https://orbstack.dev/) qui est une alternative à Docker Desktop qui est plus légère et plus rapide).
+Une fois Docker installé, il faut se rendre à la racine du projet et lancer la commande suivante (à la racine du monorepo):
+
+```bash
+docker-compose up
+```
+
+Une fois la base de données MySQL lancée, vous pouvez créer une base de données nommée `main_db` dans votre client MySQL préféré (par exemple [MySQL Workbench](https://www.mysql.com/products/workbench/)).
+
 Il faut lancer la commande suivante afin de générer le client prisma
 
 ```bash
 pnpm --filter main-api exec prisma generate
+```
+
+Vous pouvez ensuite lancer la migration de la base de données. Pour cela, il faut lancer la commande suivante (à la racine du monorepo):
+
+```bash
+pnpm --filter main-api exec prisma migrate dev --name init
+```
+
+Vous pouvez maintenant lancer la seed de la base de données. Pour cela, il faut lancer la commande suivante (à la racine du monorepo):
+
+```bash
+pnpm --filter main-api exec prisma db seed
 ```
 
 Pour lancer l'api, il faut lancer la commande suivante (à la racine du monorepo):
@@ -61,3 +84,14 @@ Pour lancer l'api, il faut lancer la commande suivante (à la racine du monorepo
 ```bash
 pnpm run --filter main-api dev
 ```
+
+### Utilisation
+
+Rendez vous sur [http://localhost:5001](http://localhost:5001) pour accéder à l'interface du front.
+
+Le seed de la base de données a ajouté un utilisateur avec les identifiants suivants :
+
+- username : `captain_jack`
+- password : `pirate1234`
+
+Vous pouvez donc vous connecter avec ces identifiants ou bien créer un nouveau compte sur la page d'inscription.
