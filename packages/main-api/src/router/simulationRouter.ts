@@ -56,6 +56,11 @@ export const simulationRouter = trpc.router({
         longitude: traject?.longitude ?? 0,
       };
 
+      console.log("initial boat position : ");
+      console.log(prev);
+      console.log("destination position : ");
+      console.log(destinationPos);
+
       let currentSpeed = traject?.Speed.sort((a, b) => {
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       }).at(0);
@@ -110,7 +115,7 @@ export const simulationRouter = trpc.router({
 
         ee.on("speedChange", (data) => {
           currentSpeed = data;
-          console.log("speedChange");
+          console.log("speedChange, speed : ", currentSpeed.speed);
         });
 
         ee.on("windChange", (data) => {

@@ -1,11 +1,13 @@
 type TPosition = { latitude: number; longitude: number };
 
 const getDirection = (boatPos: TPosition, destinationPos: TPosition) => {
-  return (destinationPos.latitude - boatPos.latitude) / (destinationPos.longitude - boatPos.longitude);
+  // Retourne l'angle en radians
+  return Math.atan2(destinationPos.latitude - boatPos.latitude, destinationPos.longitude - boatPos.longitude);
 };
 
 const calculateSpeed = (speed: number, wind: { direction: number; speed: number }) => {
-  return speed + wind.speed * Math.cos(wind.direction) * 0.01;
+  const directionRad = (wind.direction * Math.PI) / 180;
+  return speed + wind.speed * Math.cos(directionRad) * 0.01;
 };
 
 export const calculateDistance = (boatPos: TPosition, destinationPos: TPosition) => {
@@ -14,29 +16,17 @@ export const calculateDistance = (boatPos: TPosition, destinationPos: TPosition)
   );
 };
 
-// Refactor the previous function
 export const calculateNextPosition = (
   boatPos: TPosition,
   destinationPos: TPosition,
   speed: number,
   wind: { direction: number; speed: number }
 ) => {
-  let newLongitude = boatPos.longitude;
-  let newLatitude = boatPos.latitude;
+  const direction = getDirection(boatPos, destinationPos); // angle en radians
   const newSpeed = calculateSpeed(speed, wind);
-  if (boatPos.longitude > destinationPos.longitude) {
-    newLongitude -= Math.cos(getDirection(boatPos, destinationPos)) * newSpeed;
-  } else if (boatPos.longitude < destinationPos.longitude) {
-    newLongitude += Math.cos(getDirection(boatPos, destinationPos)) * newSpeed;
-  }
-  if (boatPos.latitude > destinationPos.latitude) {
-    newLatitude -= Math.sin(getDirection(boatPos, destinationPos)) * newSpeed;
-  } else if (boatPos.latitude < destinationPos.latitude) {
-    newLatitude += Math.sin(getDirection(boatPos, destinationPos)) * newSpeed;
-  }
 
   return {
-    latitude: newLatitude,
-    longitude: newLongitude,
+    latitude: boatPos.latitude + Math.sin(direction) * newSpeed,
+    longitude: boatPos.longitude + Math.cos(direction) * newSpeed,
   };
 };
